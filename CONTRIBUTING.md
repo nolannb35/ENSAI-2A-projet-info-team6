@@ -1,3 +1,4 @@
 Clément Valot
-simon mironescu <3
 Samuel Harris
+Nolann Bougis
+Zoeb Goulamaly
