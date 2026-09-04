@@ -1,1 +1,2 @@
 Clément Valot
+Samuel Harris
