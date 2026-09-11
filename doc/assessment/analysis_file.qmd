@@ -1,5 +1,247 @@
 ---
-title: "analysis_file"
-format: html
+title: ""
+format:
+  pdf:
+    documentclass: article
+    code-line-numbers: true
+    include-in-header:
+      - text: |
+          \usepackage{setspace}
+          \onehalfspacing
+          \usepackage{indentfirst}
+          \setlength{\parindent}{2em}
+          \setlength{\parskip}{1em}
+lang: fr
+fontsize: 11pt
+papersize: a4
+geometry: top=1.5cm, bottom=1.5cm, left=2.5cm, right=2.5cm
 ---
 
+\begin{titlepage}
+\centering
+\includegraphics{Ensai-logo.png}\\
+\vspace{1cm}
+{\LARGE\textsc{Ensai Cinema Club}}\\
+
+\vspace{2cm}
+
+\rule{\textwidth}{0.5mm}\\
+\vspace {0.3cm}
+{\huge\bfseries Analysis File}\\
+\vspace {0.5cm}
+
+\rule{\textwidth}{0.5mm}\\
+
+
+
+\vspace{3cm}
+
+\begin{flushleft}
+\emph{Étudiants:}\\
+N. Bougis,\\
+S. Mironescu \\
+Z. Goulamaly \\
+S. Harris
+\end{flushleft}
+
+
+\begin{flushright}
+\emph{Tuteur:}\\
+C. Valot\\
+\end{flushright}
+
+\vfill 
+\begin{center}
+École Nationale de la Statistique et de l’Analyse de l’Information\\
+2025--2026
+\end{center}
+\end{titlepage}
+
+\newpage
+
+\renewcommand{\contentsname}{Summary}
+\tableofcontents
+
+
+\newpage
+
+# Introduction
+
+*\[Project context, initial problem statement, overall objectives, brief presentation of the intended final product, announcement of the outline.\]*
+
+------------------------------------------------------------------------
+
+# Part 1 – Functional Analysis
+
+## Rephrasing the requirements
+
+*\[Take the initial (often vague) requirements and rephrase them into precise, actionable statements. Explain the assumptions made to resolve ambiguities.\]*
+
+> **Original requirement (from the brief):** *\[quote or paraphrase of the vague requirement\]*
+>
+> **Rephrased version:** *\[your clear, actionable interpretation\]*
+
+## Selected features
+
+### Priority features
+
+*\[List of features essential for the application to function properly.\]*
+
+| Feature    | Description       | Target user                   | Priority |
+|------------|-------------------|-------------------------------|----------|
+| *\[Name\]* | *\[Description\]* | *\[Customer / Admin / etc.\]* | High     |
+|            |                   |                               |          |
+
+: Priority features (MVP)
+
+### Features included if time allows
+
+*\["Stretch" features that will only be developed if the schedule allows before the November deadline.\]*
+
+| Feature    | Description       | Condition for implementation           |
+|------------|-------------------|----------------------------------------|
+| *\[Name\]* | *\[Description\]* | *\[e.g., if Sprint 3 finishes early\]* |
+
+: Stretch features
+
+### Features excluded
+
+*\[Features considered and then dropped, with justification (out of scope, too complex, lack of time, etc.).\]*
+
+| Feature    | Reason for exclusion |
+|------------|----------------------|
+| *\[Name\]* | *\[Justification\]*  |
+
+: Excluded features
+
+## Summary
+
+*\[Short summary paragraph / transition to the technical part.\]*
+
+------------------------------------------------------------------------
+
+# Part 2 – Technical-Functional Layout
+
+## Benchmark of the Movie Information API
+
+*\[Comparison of the available APIs (e.g., TMDB, OMDb, IMDb API, etc.) against objective criteria.\]*
+
+| Criterion           | API 1 | API 2 | API 3 |
+|---------------------|-------|-------|-------|
+| Cost                |       |       |       |
+| Rate limits         |       |       |       |
+| Data richness       |       |       |       |
+| Documentation       |       |       |       |
+| Ease of integration |       |       |       |
+| **Final choice**    |       |       |       |
+
+: Movie API benchmark
+
+*\[Justify the final choice in one short paragraph.\]*
+
+## Overall structure and integration with third-party services
+
+*\[High-level presentation of the application and its interactions with external services: Movie API, payment system, accounting dashboard, etc. This is intentionally more functional/synthetic than the detailed architecture diagram in Part 3.\]*
+
+
+## Justification of technical choices
+
+*\[Why these third-party services and not others? Choices imposed by the requirements vs. choices made freely by the team. Link to cost, time, and team skill constraints.\]*
+
+------------------------------------------------------------------------
+
+# Part 3 – Technical Design
+
+## Architecture diagram
+
+*\[Detailed technical view: application layers, frameworks, hosting, communication between components.\]*
+
+![Architecture diagram](architecture-diagram.png){#fig-architecture}
+
+[*Comment on the diagram ( @fig-architecture): role of each layer, technologies used.*]
+
+## Data model
+
+*\[What information does the application need to store? List the main entities and their attributes.\]*
+
+| Entity            | Main attributes       | Comment |
+|-------------------|-----------------------|---------|
+| *\[User\]*        | id, name, email, ...  |         |
+| *\[Movie\]*       | id, title, genre, ... |         |
+| *\[Transaction\]* | id, amount, date, ... |         |
+
+: Data model — main entities
+
+![Data Model](data model.pdf){#fig-dm}
+
+## Class diagram
+
+*\[Object-oriented structure of the application: classes, attributes, methods, relationships (inheritance, composition, association).\]*
+
+<!--
+![Class diagram](images/class-diagram.png){#fig-class}
+-->
+
+
+[*Briefly comment on the main classes and their relationships ( @fig-class).*]
+
+## Use case diagram
+
+*\[Interactions between actors (customer, administrator, external system) and the main features of the system.\]*
+
+![Use case diagram](use-case-diagram.pdf){#fig-usecase}
+
+[*Briefly describe each use case ( @fig-usecase).*]
+
+------------------------------------------------------------------------
+
+# Part 4 – Project Management Description
+
+## Organization of the team as a product and development team
+
+*\[Presentation of the team: who plays which role on the "product" side (vision, prioritization) and on the "development" side (implementation).\]*
+
+| Member     | Product role              | Development role    |
+|------------|---------------------------|---------------------|
+| *\[Name\]* | *\[e.g., Product Owner\]* | *\[e.g., Backend\]* |
+| *\[Name\]* |                           |                     |
+
+: Team organization
+
+## Role assignment within the group
+
+*\[Detail of each member's responsibilities, optionally as a RACI table.\]*
+
+| Task / Module | Responsible | Contributors | Approved by |
+|---------------|-------------|--------------|-------------|
+|               |             |              |             |
+
+: Role assignment (RACI)
+
+## Methodology
+
+*\[Working methodology adopted: Agile/Scrum, sprints, communication tools (Slack, Discord...), task management tools (Trello, Notion, GitHub Projects...), meeting frequency, code management (Git workflow, code reviews).\]*
+
+## Projected schedule – Gantt chart
+
+*\[Schedule of the project's main milestones up to the November deadline.\]*
+
+![Gantt chart](gantt diagram.png){#fig-gantt}
+
+## Challenges encountered and adjustments
+
+*\[Optional: lessons learned on project management, unforeseen events, schedule or scope adjustments.\]*
+
+------------------------------------------------------------------------
+
+# Conclusion
+
+*\[Assessment of the work carried out against the objectives set in the introduction, review of features actually delivered vs. planned, limitations of the project, possible future developments.\]*
+
+------------------------------------------------------------------------
+
+# Appendices {.appendix}
+
+- *\[Original requirements / brief\]*
+- *\[Significant code excerpts\]*
+- *\[Mockups / wireframes\]*

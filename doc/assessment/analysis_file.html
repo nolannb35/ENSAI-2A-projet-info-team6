@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="[Team members’ names]">
+
+<title>[Project Title]</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="analysis_file_files/libs/clipboard/clipboard.min.js"></script>
+<script src="analysis_file_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="analysis_file_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="analysis_file_files/libs/quarto-html/popper.min.js"></script>
+<script src="analysis_file_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="analysis_file_files/libs/quarto-html/anchor.min.js"></script>
+<link href="analysis_file_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="analysis_file_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="analysis_file_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="analysis_file_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="analysis_file_files/libs/bootstrap/bootstrap-66a9def46192c5003d763b417b2ffaaa.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#part-1-functional-analysis" id="toc-part-1-functional-analysis" class="nav-link" data-scroll-target="#part-1-functional-analysis"><span class="header-section-number">2</span> Part 1 – Functional Analysis</a>
+  <ul class="collapse">
+  <li><a href="#rephrasing-the-requirements" id="toc-rephrasing-the-requirements" class="nav-link" data-scroll-target="#rephrasing-the-requirements"><span class="header-section-number">2.1</span> Rephrasing the requirements</a></li>
+  <li><a href="#selected-features" id="toc-selected-features" class="nav-link" data-scroll-target="#selected-features"><span class="header-section-number">2.2</span> Selected features</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">2.3</span> Summary</a></li>
+  </ul></li>
+  <li><a href="#part-2-technical-functional-layout" id="toc-part-2-technical-functional-layout" class="nav-link" data-scroll-target="#part-2-technical-functional-layout"><span class="header-section-number">3</span> Part 2 – Technical-Functional Layout</a>
+  <ul class="collapse">
+  <li><a href="#benchmark-of-the-movie-information-api" id="toc-benchmark-of-the-movie-information-api" class="nav-link" data-scroll-target="#benchmark-of-the-movie-information-api"><span class="header-section-number">3.1</span> Benchmark of the Movie Information API</a></li>
+  <li><a href="#overall-structure-and-integration-with-third-party-services" id="toc-overall-structure-and-integration-with-third-party-services" class="nav-link" data-scroll-target="#overall-structure-and-integration-with-third-party-services"><span class="header-section-number">3.2</span> Overall structure and integration with third-party services</a></li>
+  <li><a href="#justification-of-technical-choices" id="toc-justification-of-technical-choices" class="nav-link" data-scroll-target="#justification-of-technical-choices"><span class="header-section-number">3.3</span> Justification of technical choices</a></li>
+  </ul></li>
+  <li><a href="#part-3-technical-design" id="toc-part-3-technical-design" class="nav-link" data-scroll-target="#part-3-technical-design"><span class="header-section-number">4</span> Part 3 – Technical Design</a>
+  <ul class="collapse">
+  <li><a href="#architecture-diagram" id="toc-architecture-diagram" class="nav-link" data-scroll-target="#architecture-diagram"><span class="header-section-number">4.1</span> Architecture diagram</a></li>
+  <li><a href="#data-model" id="toc-data-model" class="nav-link" data-scroll-target="#data-model"><span class="header-section-number">4.2</span> Data model</a></li>
+  <li><a href="#class-diagram" id="toc-class-diagram" class="nav-link" data-scroll-target="#class-diagram"><span class="header-section-number">4.3</span> Class diagram</a></li>
+  <li><a href="#use-case-diagram" id="toc-use-case-diagram" class="nav-link" data-scroll-target="#use-case-diagram"><span class="header-section-number">4.4</span> Use case diagram</a></li>
+  </ul></li>
+  <li><a href="#part-4-project-management-description" id="toc-part-4-project-management-description" class="nav-link" data-scroll-target="#part-4-project-management-description"><span class="header-section-number">5</span> Part 4 – Project Management Description</a>
+  <ul class="collapse">
+  <li><a href="#organization-of-the-team-as-a-product-and-development-team" id="toc-organization-of-the-team-as-a-product-and-development-team" class="nav-link" data-scroll-target="#organization-of-the-team-as-a-product-and-development-team"><span class="header-section-number">5.1</span> Organization of the team as a product and development team</a></li>
+  <li><a href="#role-assignment-within-the-group" id="toc-role-assignment-within-the-group" class="nav-link" data-scroll-target="#role-assignment-within-the-group"><span class="header-section-number">5.2</span> Role assignment within the group</a></li>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology"><span class="header-section-number">5.3</span> Methodology</a></li>
+  <li><a href="#projected-schedule-gantt-chart" id="toc-projected-schedule-gantt-chart" class="nav-link" data-scroll-target="#projected-schedule-gantt-chart"><span class="header-section-number">5.4</span> Projected schedule – Gantt chart</a></li>
+  <li><a href="#challenges-encountered-and-adjustments" id="toc-challenges-encountered-and-adjustments" class="nav-link" data-scroll-target="#challenges-encountered-and-adjustments"><span class="header-section-number">5.5</span> Challenges encountered and adjustments</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">6</span> Conclusion</a></li>
+  
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="analysis_file.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">[Project Title]</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>[Team members’ names] </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
+<p><em>[Project context, initial problem statement, overall objectives, brief presentation of the intended final product, announcement of the outline.]</em></p>
+<hr>
+</section>
+<section id="part-1-functional-analysis" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="part-1-functional-analysis"><span class="header-section-number">2</span> Part 1 – Functional Analysis</h2>
+<section id="rephrasing-the-requirements" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="rephrasing-the-requirements"><span class="header-section-number">2.1</span> Rephrasing the requirements</h3>
+<p><em>[Take the initial (often vague) requirements and rephrase them into precise, actionable statements. Explain the assumptions made to resolve ambiguities.]</em></p>
+<blockquote class="blockquote">
+<p><strong>Original requirement (from the brief):</strong> <em>[quote or paraphrase of the vague requirement]</em></p>
+<p><strong>Rephrased version:</strong> <em>[your clear, actionable interpretation]</em></p>
+</blockquote>
+</section>
+<section id="selected-features" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="selected-features"><span class="header-section-number">2.2</span> Selected features</h3>
+<section id="priority-features-mvp" class="level4" data-number="2.2.1">
+<h4 data-number="2.2.1" class="anchored" data-anchor-id="priority-features-mvp"><span class="header-section-number">2.2.1</span> Priority features (MVP)</h4>
+<p><em>[List of features essential for the application to function properly.]</em></p>
+<table class="caption-top table">
+<caption>Priority features (MVP)</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 26%">
+<col style="width: 43%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Description</th>
+<th>Target user</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>[Name]</em></td>
+<td><em>[Description]</em></td>
+<td><em>[Customer / Admin / etc.]</em></td>
+<td>High</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="features-included-if-time-allows" class="level4" data-number="2.2.2">
+<h4 data-number="2.2.2" class="anchored" data-anchor-id="features-included-if-time-allows"><span class="header-section-number">2.2.2</span> Features included if time allows</h4>
+<p><em>[“Stretch” features that will only be developed if the schedule allows before the November deadline.]</em></p>
+<table class="caption-top table">
+<caption>Stretch features</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 26%">
+<col style="width: 56%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Description</th>
+<th>Condition for implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>[Name]</em></td>
+<td><em>[Description]</em></td>
+<td><em>[e.g., if Sprint 3 finishes early]</em></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="features-excluded" class="level4" data-number="2.2.3">
+<h4 data-number="2.2.3" class="anchored" data-anchor-id="features-excluded"><span class="header-section-number">2.2.3</span> Features excluded</h4>
+<p><em>[Features considered and then dropped, with justification (out of scope, too complex, lack of time, etc.).]</em></p>
+<table class="caption-top table">
+<caption>Excluded features</caption>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Reason for exclusion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>[Name]</em></td>
+<td><em>[Justification]</em></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="summary" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="summary"><span class="header-section-number">2.3</span> Summary</h3>
+<p><em>[Short summary paragraph / transition to the technical part.]</em></p>
+<hr>
+</section>
+</section>
+<section id="part-2-technical-functional-layout" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="part-2-technical-functional-layout"><span class="header-section-number">3</span> Part 2 – Technical-Functional Layout</h2>
+<section id="benchmark-of-the-movie-information-api" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="benchmark-of-the-movie-information-api"><span class="header-section-number">3.1</span> Benchmark of the Movie Information API</h3>
+<p><em>[Comparison of the available APIs (e.g., TMDB, OMDb, IMDb API, etc.) against objective criteria.]</em></p>
+<table class="caption-top table">
+<caption>Movie API benchmark</caption>
+<thead>
+<tr class="header">
+<th>Criterion</th>
+<th>API 1</th>
+<th>API 2</th>
+<th>API 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cost</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Rate limits</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Data richness</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Documentation</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Ease of integration</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Final choice</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><em>[Justify the final choice in one short paragraph.]</em></p>
+</section>
+<section id="overall-structure-and-integration-with-third-party-services" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="overall-structure-and-integration-with-third-party-services"><span class="header-section-number">3.2</span> Overall structure and integration with third-party services</h3>
+<p><em>[High-level presentation of the application and its interactions with external services: Movie API, payment system, accounting dashboard, etc. This is intentionally more functional/synthetic than the detailed architecture diagram in Part 3.]</em></p>
+<div id="fig-integration" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-integration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/integration-diagram.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-integration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Overall integration diagram — Application ↔︎ Movie API / Payment system / Accounting dashboard / Database
+</figcaption>
+</figure>
+</div>
+<p>[<em>Describe each interaction: what data flows, in which direction, at what frequency. Reference the figure with <a href="#fig-integration" class="quarto-xref">Figure&nbsp;1</a>.</em>]</p>
+</section>
+<section id="justification-of-technical-choices" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="justification-of-technical-choices"><span class="header-section-number">3.3</span> Justification of technical choices</h3>
+<p><em>[Why these third-party services and not others? Choices imposed by the requirements vs.&nbsp;choices made freely by the team. Link to cost, time, and team skill constraints.]</em></p>
+<hr>
+</section>
+</section>
+<section id="part-3-technical-design" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="part-3-technical-design"><span class="header-section-number">4</span> Part 3 – Technical Design</h2>
+<section id="architecture-diagram" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="architecture-diagram"><span class="header-section-number">4.1</span> Architecture diagram</h3>
+<p><em>[Detailed technical view: application layers, frameworks, hosting, communication between components.]</em></p>
+<div id="fig-architecture" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/architecture-diagram.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Architecture diagram
+</figcaption>
+</figure>
+</div>
+<p>[<em>Comment on the diagram ( <a href="#fig-architecture" class="quarto-xref">Figure&nbsp;2</a>): role of each layer, technologies used.</em>]</p>
+</section>
+<section id="data-model" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="data-model"><span class="header-section-number">4.2</span> Data model</h3>
+<p><em>[What information does the application need to store? List the main entities and their attributes.]</em></p>
+<table class="caption-top table">
+<caption>Data model — main entities</caption>
+<thead>
+<tr class="header">
+<th>Entity</th>
+<th>Main attributes</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>[User]</em></td>
+<td>id, name, email, …</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><em>[Movie]</em></td>
+<td>id, title, genre, …</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><em>[Transaction]</em></td>
+<td>id, amount, date, …</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div id="fig-er" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-er-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/er-diagram.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-er-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Entity-relationship diagram (optional)
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="class-diagram" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="class-diagram"><span class="header-section-number">4.3</span> Class diagram</h3>
+<p><em>[Object-oriented structure of the application: classes, attributes, methods, relationships (inheritance, composition, association).]</em></p>
+<div id="fig-class" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-class-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/class-diagram.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-class-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Class diagram
+</figcaption>
+</figure>
+</div>
+<p>[<em>Briefly comment on the main classes and their relationships ( <a href="#fig-class" class="quarto-xref">Figure&nbsp;4</a>).</em>]</p>
+</section>
+<section id="use-case-diagram" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="use-case-diagram"><span class="header-section-number">4.4</span> Use case diagram</h3>
+<p><em>[Interactions between actors (customer, administrator, external system) and the main features of the system.]</em></p>
+<div id="fig-usecase" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-usecase-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/use-case-diagram.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-usecase-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Use case diagram
+</figcaption>
+</figure>
+</div>
+<p>[<em>Briefly describe each use case ( <a href="#fig-usecase" class="quarto-xref">Figure&nbsp;5</a>).</em>]</p>
+<hr>
+</section>
+</section>
+<section id="part-4-project-management-description" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="part-4-project-management-description"><span class="header-section-number">5</span> Part 4 – Project Management Description</h2>
+<section id="organization-of-the-team-as-a-product-and-development-team" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="organization-of-the-team-as-a-product-and-development-team"><span class="header-section-number">5.1</span> Organization of the team as a product and development team</h3>
+<p><em>[Presentation of the team: who plays which role on the “product” side (vision, prioritization) and on the “development” side (implementation).]</em></p>
+<table class="caption-top table">
+<caption>Team organization</caption>
+<thead>
+<tr class="header">
+<th>Member</th>
+<th>Product role</th>
+<th>Development role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>[Name]</em></td>
+<td><em>[e.g., Product Owner]</em></td>
+<td><em>[e.g., Backend]</em></td>
+</tr>
+<tr class="even">
+<td><em>[Name]</em></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="role-assignment-within-the-group" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="role-assignment-within-the-group"><span class="header-section-number">5.2</span> Role assignment within the group</h3>
+<p><em>[Detail of each member’s responsibilities, optionally as a RACI table.]</em></p>
+<table class="caption-top table">
+<caption>Role assignment (RACI)</caption>
+<thead>
+<tr class="header">
+<th>Task / Module</th>
+<th>Responsible</th>
+<th>Contributors</th>
+<th>Approved by</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="methodology" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="methodology"><span class="header-section-number">5.3</span> Methodology</h3>
+<p><em>[Working methodology adopted: Agile/Scrum, sprints, communication tools (Slack, Discord…), task management tools (Trello, Notion, GitHub Projects…), meeting frequency, code management (Git workflow, code reviews).]</em></p>
+</section>
+<section id="projected-schedule-gantt-chart" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="projected-schedule-gantt-chart"><span class="header-section-number">5.4</span> Projected schedule – Gantt chart</h3>
+<p><em>[Schedule of the project’s main milestones up to the November deadline.]</em></p>
+<div id="fig-gantt" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gantt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/gantt-chart.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gantt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Gantt chart
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="challenges-encountered-and-adjustments" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="challenges-encountered-and-adjustments"><span class="header-section-number">5.5</span> Challenges encountered and adjustments</h3>
+<p><em>[Optional: lessons learned on project management, unforeseen events, schedule or scope adjustments.]</em></p>
+<hr>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">6</span> Conclusion</h2>
+<p><em>[Assessment of the work carried out against the objectives set in the introduction, review of features actually delivered vs.&nbsp;planned, limitations of the project, possible future developments.]</em></p>
+<hr>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="appendices" class="level2 appendix" data-number="7"><h2 class="anchored quarto-appendix-heading"><span class="header-section-number">7</span> Appendices</h2><div class="quarto-appendix-contents">
+
+<ul>
+<li><em>[Original requirements / brief]</em></li>
+<li><em>[Significant code excerpts]</em></li>
+<li><em>[Mockups / wireframes]</em></li>
+</ul>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
