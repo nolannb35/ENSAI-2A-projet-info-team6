@@ -75,80 +75,33 @@ C. Valot\\
 
 ## Rephrasing the requirements
 
-*\[Take the initial (often vague) requirements and rephrase them into precise, actionable statements. Explain the assumptions made to resolve ambiguities.\]*
-
-> **Original requirement (from the brief):** *\[quote or paraphrase of the vague requirement\]*
->
-> **Rephrased version:** *\[your clear, actionable interpretation\]*
 
 ## Selected features
 
 ### Priority features
 
-*\[List of features essential for the application to function properly.\]*
-
-| Feature    | Description       | Target user                   | Priority |
-|------------|-------------------|-------------------------------|----------|
-| *\[Name\]* | *\[Description\]* | *\[Customer / Admin / etc.\]* | High     |
-|            |                   |                               |          |
-
-: Priority features (MVP)
 
 ### Features included if time allows
 
-*\["Stretch" features that will only be developed if the schedule allows before the November deadline.\]*
-
-| Feature    | Description       | Condition for implementation           |
-|------------|-------------------|----------------------------------------|
-| *\[Name\]* | *\[Description\]* | *\[e.g., if Sprint 3 finishes early\]* |
-
-: Stretch features
 
 ### Features excluded
 
-*\[Features considered and then dropped, with justification (out of scope, too complex, lack of time, etc.).\]*
+## Summary: Use case diagram
 
-| Feature    | Reason for exclusion |
-|------------|----------------------|
-| *\[Name\]* | *\[Justification\]*  |
+![Use case diagram](use-case-diagram.pdf){#fig-usecase}
 
-: Excluded features
 
-## Summary
-
-*\[Short summary paragraph / transition to the technical part.\]*
-
-------------------------------------------------------------------------
 
 # Part 2 – Technical-Functional Layout
 
 ## Benchmark of the Movie Information API
 
-*\[Comparison of the available APIs (e.g., TMDB, OMDb, IMDb API, etc.) against objective criteria.\]*
-
-| Criterion           | API 1 | API 2 | API 3 |
-|---------------------|-------|-------|-------|
-| Cost                |       |       |       |
-| Rate limits         |       |       |       |
-| Data richness       |       |       |       |
-| Documentation       |       |       |       |
-| Ease of integration |       |       |       |
-| **Final choice**    |       |       |       |
-
-: Movie API benchmark
-
-*\[Justify the final choice in one short paragraph.\]*
 
 ## Overall structure and integration with third-party services
-
-*\[High-level presentation of the application and its interactions with external services: Movie API, payment system, accounting dashboard, etc. This is intentionally more functional/synthetic than the detailed architecture diagram in Part 3.\]*
 
 
 ## Justification of technical choices
 
-*\[Why these third-party services and not others? Choices imposed by the requirements vs. choices made freely by the team. Link to cost, time, and team skill constraints.\]*
-
-------------------------------------------------------------------------
 
 # Part 3 – Technical Design
 
@@ -164,11 +117,6 @@ C. Valot\\
 
 *\[What information does the application need to store? List the main entities and their attributes.\]*
 
-| Entity            | Main attributes       | Comment |
-|-------------------|-----------------------|---------|
-| *\[User\]*        | id, name, email, ...  |         |
-| *\[Movie\]*       | id, title, genre, ... |         |
-| *\[Transaction\]* | id, amount, date, ... |         |
 
 : Data model — main entities
 
@@ -185,15 +133,12 @@ C. Valot\\
 
 [*Briefly comment on the main classes and their relationships ( @fig-class).*]
 
-## Use case diagram
+## Activity diagrams
 
-*\[Interactions between actors (customer, administrator, external system) and the main features of the system.\]*
+![User activity diagram](){#fig-usecase}
 
-![Use case diagram](use-case-diagram.pdf){#fig-usecase}
+![Admin activity diagram](){#fig-usecase}
 
-[*Briefly describe each use case ( @fig-usecase).*]
-
-------------------------------------------------------------------------
 
 # Part 4 – Project Management Description
 
