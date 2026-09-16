@@ -123,12 +123,12 @@ Based on the same search query ("The Odyssey"), here is the relevant data return
 | Release Date | `"Released": "17 Jul 2026"` | `"release_date": "2026-07-15"` |
 | Content Rating | `'Rated': 'R'`<br>*(US age rating classification)* | `"adult": False`<br>*(Indicates if the movie is rated adult/pornographic)*<br><br>`"softcore": False`<br>*(Specific flag designating non-explicit erotic content)* |
 
-# Final Decision {.unlisted .unnumbered}
+## Final Decision {.unlisted .unnumbered}
 
 TMDB is selected: It is the only candidate among the two to return key fields such as title, synopsis, and genres translated into French (via the language=fr-FR parameter), whereas OMDb strictly provides these fields in English.
 
 
-## Accounting Module 
+# Accounting Module 
 
 The Accounting Module collects sales data and tracks financial performance. This report presents the main accounting and analytics features chosen for the system.
 
