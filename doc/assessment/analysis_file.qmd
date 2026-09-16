@@ -217,9 +217,5 @@ move a lot faster than usual since we'll have way more time on it. That's
 basically it, everything ends up pointing to the final submission on
 21/11.
 
-
-## Challenges encountered and adjustments
-
-
 # Conclusion
 
