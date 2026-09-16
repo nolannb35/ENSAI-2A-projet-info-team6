@@ -91,6 +91,87 @@ C. Valot\\
 
 ## Benchmark of the Movie Information API
 
+## Context
+
+Three movie data APIs are under consideration for the project: **IMDb**, **OMDb**, and **TMDB**. The goal is to compare them, rule out any unsuitable options, and select the one that provides the most relevant information based on the transmitted JSON (e.g., searching for information on the movie *The Odyssey*).
+
+## Comparison of the Three APIs
+
+| Criteria | OMDb | TMDB | IMDb |
+|---|---|---|---|
+| **Price** | Free (1000 req./day) | Free (40 req./10s) or paid upon negotiation | Paid (AWS, min. $150,000) |
+| **Official Public API** | Yes | Yes | No |
+| **Ease of Use** | Easy | Easy | Difficult (AWS) |
+| **Data Completeness** | Complete | Very complete | Very complete |
+| **License** | Commercial use allowed | Non-commercial use by default | Mandatory commercial license |
+| **Language** | English only | French supported (fr-FR) | French supported |
+
+## Exclusion of IMDb
+
+IMDb is ruled out for the following reasons:
+
+- No official public API available: access is provided via AWS with a minimum entry cost of **$150,000**.
+- Incompatible with the project's budget and technical requirements.
+
+The evaluation therefore focuses solely on **OMDb** and **TMDB**.
+
+## JSON Comparison — OMDb vs TMDB
+
+Comparison based on the same search query (*"The Odyssey"*), showing the relevant data returned by each API:
+
+| Data Field | OMDb (JSON) | TMDB (JSON, `language=fr-FR`) |
+|---|---|---|
+| **Title** | `"Title": "The Odyssey"` (English only) | `"title": "L'Odyssée"` (translated into French) |
+| **Synopsis** | `"Plot"` in English only | `"overview"` translated into French |
+| **Genres** | `"Genre": "Action, Adventure, Fantasy"` (English text) | `"genres": [{"id_genre": "Aventure"}, ...]` (translated) |
+| **Runtime** | `"Runtime": "172 min"` | `"runtime": 172` (minutes) |
+| **Release Date** | `"Released": "17 Jul 2026"` | `"release_date": "2026-07-15"` |
+| **Content Rating** | `"Rated": "R"`: US age rating classification | `"adult": false`: indicates if the movie is rated adult/pornographic<br>`"softcore": false`: specific flag designating non-explicit erotic content |
+
+### Example JSON Payloads
+
+::: {.panel-tabset}
+
+## OMDb
+
+```json
+{
+  "Title": "The Odyssey",
+  "Plot": "A retelling of Homer's epic tale of Odysseus's journey home.",
+  "Genre": "Action, Adventure, Fantasy",
+  "Runtime": "172 min",
+  "Released": "17 Jul 2026",
+  "Rated": "R"
+}
+```
+
+## TMDB (language=fr-FR)
+
+```json
+{
+  "title": "L'Odyssée",
+  "overview": "Le retour périlleux d'Ulysse après la guerre de Troie.",
+  "genres": [
+    { "id_genre": "Aventure" },
+    { "id_genre": "Action" },
+    { "id_genre": "Fantastique" }
+  ],
+  "runtime": 172,
+  "release_date": "2026-07-15",
+  "adult": false,
+  "softcore": false
+}
+```
+
+:::
+
+## Final Decision
+
+**TMDB is selected** as the reference API for the project.
+
+It is the only one of the two candidates to return key fields — title, synopsis, genres — **translated into French** via the `language=fr-FR` parameter, whereas OMDb strictly provides these fields in English.
+
+
 
 ## Overall structure and integration with third-party services
 
