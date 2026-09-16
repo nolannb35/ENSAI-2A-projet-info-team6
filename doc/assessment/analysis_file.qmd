@@ -11,6 +11,7 @@ format:
           \usepackage{indentfirst}
           \setlength{\parindent}{2em}
           \setlength{\parskip}{1em}
+          \usepackage{float}
 lang: fr
 fontsize: 11pt
 papersize: a4
@@ -84,9 +85,6 @@ C. Valot\\
 ### Features excluded
 
 ## Summary: Use case diagram
-<!--
-![Use case diagram](use-case-diagram.pdf){#fig-usecase}
--->
 
 
 # Part 2 – Technical-Functional Layout
@@ -104,29 +102,41 @@ C. Valot\\
 
 ## Architecture diagram
 
-<!--
-![Architecture diagram](architecture-diagram.png){#fig-architecture}
--->
+
 
 ## Data model
 
-<!--
-![Data Model](data-model.pdf){#fig-dm}
--->
+
 
 ## Class diagram
 
-<!--
-![Class diagram](images/class-diagram.png){#fig-class}
--->
+
 
 
 ## Activity diagrams
 
-User activity diagram: booking a screening
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{activity1.png}
+\caption{Activity diagram: a client booking a screening}
+\label{fig:activity-user}
+\end{figure}
 
+This diagram shows the booking process from the client's
+side: picking a screening, checking seat availability, paying, and getting
+a confirmation or an expired booking if the payment fails or takes too
+long.
 
-Admin activity diagram: scheduling a screening
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{activity2.png}
+\caption{Activity diagram: an admin scheduling a screening}
+\label{fig:activity-admin}
+\end{figure}
+
+This diagram shows how an admin adds a new screening to the
+planning. The main step is checking that the room is free, with at least
+1 hour of margin before and after other screenings.
 
 
 # Part 4 – Project management description
@@ -160,8 +170,7 @@ us a main area to focus on and to be responsible for.
 We have a team meeting every week to check where everyone is, discuss
 blocking points and decide what to do next. For now we mostly talk on
 WhatsApp when we need to decide something quickly, and we put our documents
-on Google Drive so everyone can access them. We know our advisor is not a
-big fan of WhatsApp, so we're currently looking for a possibly more
+on Google Drive so everyone can access them. We know that WhatsApp is not the best communication tool for this sort of project work , so we're currently looking for a possibly more
 efficient tool, but we haven't switched yet.
 
 The code is on GitHub (github.com/nolannb35/ENSAI-2A-projet-info-team6), we
@@ -174,12 +183,14 @@ fits together before it's too late to fix.
 
 ## Gantt diagrams
 
-We made two Gantt charts instead of one: the first for the analysis phase,
-up to the Analysis File deadline, and the second for everything after that,
-until the final delivery.
-
 ### Phase 1: Analysis (28/08 - 17/09)
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{gantt1.png}
+\caption{Gantt chart for the analysis phase (28/08 - 17/09)}
+\label{fig:gantt-phase1}
+\end{figure}
 
 This phase goes from the start of the project to the Analysis File
 deadline. We start by understanding the subject and turning it into real
@@ -190,6 +201,12 @@ where we can still adjust the plan if something's off.
 
 ### Phase 2: Development (17/09 - 21/11)
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.15\textwidth]{gantt2.png}
+\caption{Gantt chart for the development phase (17/09 - 21/11)}
+\label{fig:gantt-phase2}
+\end{figure}
 
 This phase is where we actually code stuff. We start with the backend
 (database, movie API, booking, payment, accounting), then the admin
