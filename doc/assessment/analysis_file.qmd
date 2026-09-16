@@ -128,7 +128,7 @@ Based on the same search query ("The Odyssey"), here is the relevant data return
 TMDB is selected: It is the only candidate among the two to return key fields such as title, synopsis, and genres translated into French (via the language=fr-FR parameter), whereas OMDb strictly provides these fields in English.
 
 
-# Accounting Module 
+## Accounting Module 
 
 The Accounting Module collects sales data and tracks financial performance. This report presents the main accounting and analytics features chosen for the system.
 
