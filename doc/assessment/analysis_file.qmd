@@ -67,9 +67,6 @@ C. Valot\\
 
 # Introduction
 
-*\[Project context, initial problem statement, overall objectives, brief presentation of the intended final product, announcement of the outline.\]*
-
-------------------------------------------------------------------------
 
 # Part 1 – Functional Analysis
 
@@ -87,9 +84,9 @@ C. Valot\\
 ### Features excluded
 
 ## Summary: Use case diagram
-
+<!--
 ![Use case diagram](use-case-diagram.pdf){#fig-usecase}
-
+-->
 
 
 # Part 2 – Technical-Functional Layout
@@ -107,86 +104,105 @@ C. Valot\\
 
 ## Architecture diagram
 
-*\[Detailed technical view: application layers, frameworks, hosting, communication between components.\]*
-
+<!--
 ![Architecture diagram](architecture-diagram.png){#fig-architecture}
-
-[*Comment on the diagram ( @fig-architecture): role of each layer, technologies used.*]
+-->
 
 ## Data model
 
-*\[What information does the application need to store? List the main entities and their attributes.\]*
-
-
-: Data model — main entities
-
-![Data Model](data model.pdf){#fig-dm}
+<!--
+![Data Model](data-model.pdf){#fig-dm}
+-->
 
 ## Class diagram
-
-*\[Object-oriented structure of the application: classes, attributes, methods, relationships (inheritance, composition, association).\]*
 
 <!--
 ![Class diagram](images/class-diagram.png){#fig-class}
 -->
 
 
-[*Briefly comment on the main classes and their relationships ( @fig-class).*]
-
 ## Activity diagrams
 
-![User activity diagram](){#fig-usecase}
-
-![Admin activity diagram](){#fig-usecase}
+User activity diagram: booking a screening
 
 
-# Part 4 – Project Management Description
+Admin activity diagram: scheduling a screening
 
-## Organization of the team as a product and development team
 
-*\[Presentation of the team: who plays which role on the "product" side (vision, prioritization) and on the "development" side (implementation).\]*
+# Part 4 – Project management description
 
-| Member     | Product role              | Development role    |
-|------------|---------------------------|---------------------|
-| *\[Name\]* | *\[e.g., Product Owner\]* | *\[e.g., Backend\]* |
-| *\[Name\]* |                           |                     |
+## Team organization
 
-: Team organization
+We are 4 people in the team and each one has a role for the whole project:
 
-## Role assignment within the group
+| Role | Person |
+|---|---|
+| Project Manager | Nolann |
+| Technical Director | Simon |
+| DAO Supervisor | Samuel |
+| Testing Supervisor | Zoeb |
 
-*\[Detail of each member's responsibilities, optionally as a RACI table.\]*
+## Task assignment
 
-| Task / Module | Responsible | Contributors | Approved by |
-|---------------|-------------|--------------|-------------|
-|               |             |              |             |
+We split the work mostly along these roles. Nolann handles coordination,
+planning and keeping the Gantt diagram up to date. Simon takes care of the
+technical side, meaning the architecture, the class diagram and the general
+design choices. Samuel is more on the data side, so the database and the
+data model, and how we access the data. And Zoeb is in charge of testing,
+basically making sure stuff actually works before we call it done.
 
-: Role assignment (RACI)
+Of course this is not a strict separation: everyone can work on any part if
+needed, especially since we're only 4 people. But these roles give each of
+us a main area to focus on and to be responsible for.
 
 ## Methodology
 
-*\[Working methodology adopted: Agile/Scrum, sprints, communication tools (Slack, Discord...), task management tools (Trello, Notion, GitHub Projects...), meeting frequency, code management (Git workflow, code reviews).\]*
+We have a team meeting every week to check where everyone is, discuss
+blocking points and decide what to do next. For now we mostly talk on
+WhatsApp when we need to decide something quickly, and we put our documents
+on Google Drive so everyone can access them. We know our advisor is not a
+big fan of WhatsApp, so we're currently looking for a possibly more
+efficient tool, but we haven't switched yet.
 
-## Projected schedule – Gantt chart
+The code is on GitHub (github.com/nolannb35/ENSAI-2A-projet-info-team6), we
+use it to keep track of the different parts of the project and work at the
+same time without breaking each other's code.
 
-*\[Schedule of the project's main milestones up to the November deadline.\]*
+We also want to do some kind of review before the big deadlines (Analysis
+File, immersion, final delivery), just to check everyone's part actually
+fits together before it's too late to fix.
 
-![Gantt chart](gantt diagram.png){#fig-gantt}
+## Gantt diagrams
+
+We made two Gantt charts instead of one: the first for the analysis phase,
+up to the Analysis File deadline, and the second for everything after that,
+until the final delivery.
+
+### Phase 1: Analysis (28/08 - 17/09)
+
+
+This phase goes from the start of the project to the Analysis File
+deadline. We start by understanding the subject and turning it into real
+features, then we do the movie API benchmark at the same time as a first
+draft of the technical design, and we finish by writing and reviewing the
+report. The three TD meetings are basically checkpoints with our advisor,
+where we can still adjust the plan if something's off.
+
+### Phase 2: Development (17/09 - 21/11)
+
+
+This phase is where we actually code stuff. We start with the backend
+(database, movie API, booking, payment, accounting), then the admin
+back-office, and we finish with testing, updating the UML diagrams to
+match what we actually coded, writing the final report and prepping the
+defense. The 3-day immersion in early November is when we're expecting to
+move a lot faster than usual since we'll have way more time on it. That's
+basically it, everything ends up pointing to the final submission on
+21/11.
+
 
 ## Challenges encountered and adjustments
 
-*\[Optional: lessons learned on project management, unforeseen events, schedule or scope adjustments.\]*
-
-------------------------------------------------------------------------
 
 # Conclusion
 
-*\[Assessment of the work carried out against the objectives set in the introduction, review of features actually delivered vs. planned, limitations of the project, possible future developments.\]*
-
-------------------------------------------------------------------------
-
-# Appendices {.appendix}
-
-- *\[Original requirements / brief\]*
-- *\[Significant code excerpts\]*
-- *\[Mockups / wireframes\]*
