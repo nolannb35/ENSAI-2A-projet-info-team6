@@ -38,7 +38,7 @@ geometry: top=1.5cm, bottom=1.5cm, left=2.5cm, right=2.5cm
 \vspace{3cm}
 
 \begin{flushleft}
-\emph{Étudiants:}\\
+\emph{Students:}\\
 N. Bougis,\\
 S. Mironescu \\
 Z. Goulamaly \\
@@ -47,7 +47,7 @@ S. Harris
 
 
 \begin{flushright}
-\emph{Tuteur:}\\
+\emph{Tutor:}\\
 C. Valot\\
 \end{flushright}
 
