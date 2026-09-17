@@ -1,0 +1,34 @@
+\babel@toc {french}{}\relax 
+\contentsline {section}{Introduction}{2}{section*.2}%
+\contentsline {section}{Part 1 -- Functional Analysis}{2}{section*.3}%
+\contentsline {subsection}{Rephrasing the requirements}{2}{section*.4}%
+\contentsline {subsection}{Analysis of the features}{2}{section*.5}%
+\contentsline {subsubsection}{Book a screening for an upcoming movie:}{2}{section*.6}%
+\contentsline {subsubsection}{Prepare the schedule of movie screenings:}{2}{section*.7}%
+\contentsline {subsubsection}{Accounting details:}{2}{section*.8}%
+\contentsline {subsection}{Implementation of the features}{3}{section*.9}%
+\contentsline {subsubsection}{Priority features}{3}{section*.10}%
+\contentsline {paragraph}{User features:}{3}{section*.11}%
+\contentsline {paragraph}{Admin specific features:}{3}{section*.12}%
+\contentsline {subsubsection}{API uses}{3}{section*.13}%
+\contentsline {paragraph}{Movie informations:}{3}{section*.14}%
+\contentsline {paragraph}{Payment system:}{4}{section*.15}%
+\contentsline {subsubsection}{Features included if time allows:}{4}{section*.16}%
+\contentsline {subsubsection}{Features excluded:}{4}{section*.17}%
+\contentsline {subsection}{Summary: Use case diagram}{4}{section*.18}%
+\contentsline {section}{Part 2 -- Technical-Functional Layout}{5}{section*.20}%
+\contentsline {subsection}{Benchmark of the Movie Information API}{5}{section*.21}%
+\contentsline {subsection}{Accounting Module}{6}{section*.26}%
+\contentsline {subsection}{Overall structure and integration with third-party services}{6}{section*.29}%
+\contentsline {section}{Part 3 -- Technical Design}{6}{section*.30}%
+\contentsline {subsection}{Data model}{6}{section*.31}%
+\contentsline {subsection}{Class diagram}{7}{section*.33}%
+\contentsline {subsection}{Activity diagrams}{8}{section*.34}%
+\contentsline {section}{Part 4 -- Project management description}{9}{section*.37}%
+\contentsline {subsection}{Team organization}{9}{section*.38}%
+\contentsline {subsection}{Task assignment}{9}{section*.39}%
+\contentsline {subsection}{Methodology}{10}{section*.40}%
+\contentsline {subsection}{Gantt diagrams}{10}{section*.41}%
+\contentsline {subsubsection}{Phase 1: Analysis (28/08 - 17/09)}{10}{section*.42}%
+\contentsline {subsubsection}{Phase 2: Development (17/09 - 21/11)}{11}{section*.44}%
+\contentsline {section}{Conclusion}{11}{section*.46}%

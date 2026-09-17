@@ -137,6 +137,7 @@ For the moment we do not plan to implement a system to let the customer choose t
 
 ### Features excluded:
 In this project, we will not allow the customers to cancel their bookings nor get a refund. We will also not send confirmation emails but rather provide the customer with a confirmation screen and access to its bookings.
+We will not adapt our application for the specific use of adding more cinemas but rather focus solely on Bruz's cinema.
 
 ## Summary: Use case diagram
 
@@ -223,7 +224,7 @@ Here is the data model of our databases:
 \end{figure}
 
 Each database contains an exclusive id, external ids and information that will need to be provided to the different users. "Movies watched" is only to keep track of the movies each user has watched and therefore will not be turned into a python object but rather a list of objects extracted from the database. 
-"Tariffs" and "Rooms" will allow administrators to change the tariffs provided and information about new and existing rooms.
+"Pricing" and "Rooms" will allow administrators to change the pricings provided and information about new and existing rooms.
 
 ## Class diagram
 
