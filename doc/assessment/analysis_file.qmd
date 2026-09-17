@@ -228,7 +228,9 @@ Each database contains an exclusive id, external ids and information that will n
 
 ## Class diagram
 
-Here is the class diagram of our application:
+Here is the class diagram of our application: [Class diagram](https://drive.google.com/file/d/141c9mCZy_gtnyeGRQAg4GBM6GtlaYw6n/view?usp=sharing)
+
+The size of the diagram made it impossible to include it visually inside this analysis file without cropping out certain elements or impacting the readability of the text. 
 
 The core idea is to separate the layers of activity to improve testability and separation of concerns. We thus have business objects which are modified and created via a dedicated service class that will communicate to a dedicated DAO class in order to access the database.
 
