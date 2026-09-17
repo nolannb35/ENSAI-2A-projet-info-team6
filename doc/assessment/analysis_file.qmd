@@ -341,22 +341,36 @@ basically it, everything ends up pointing to the final submission on
 
 # Conclusion
 
+This first part of the project let us really understand what the Cinema
+Club application needs to do, and turn a pretty vague subject into concrete
+features we can actually build. We picked which parts we'll definitely do
+(booking, scheduling, accounting stats) and which ones stay optional given
+our November deadline, like the real payment provider.
+
+We also got a first version of our technical design (data model, class
+diagram, use case diagram, activity diagrams) and a clear plan with our two
+Gantt charts. Some things are still open, like the exact database schema
+details or a few edge cases in the booking flow, but we think we have
+enough to start coding.
+
+The next step is the development phase itself. We'll probably have to
+adjust some of what's in this report along the way, but it gives us a solid
+base to start from.
+
+\newpage
 
 
 
+# Appendices {.unlisted .unnumbered}
 
+## Appendix 1: OMDb API Query {.unlisted .unnumbered}
 
-
-# Annexes {.unlisted .unnumbered}
-
-## Annex 1: OMDb API Query {.unlisted .unnumbered}
-
-This annex shows a Python script using the OMDb API to search for “The Odyssey” and retrieve its details in JSON.
+This appendix shows a Python script using the OMDb API to search for “The Odyssey” and retrieve its details in JSON.
 
 ![](ANNEXE%201.png)
 
-## Annex 2: TMDb API Query {.unlisted .unnumbered}
+## Appendix 2: TMDb API Query {.unlisted .unnumbered}
 
-This annex shows a Python script using the TMDb API to search for “The Odyssey” and retrieve its details in JSON.
+This appendix shows a Python script using the TMDb API to search for “The Odyssey” and retrieve its details in JSON.
 
 ![](ANNEXE%202.png)
