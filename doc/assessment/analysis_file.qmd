@@ -73,19 +73,81 @@ C. Valot\\
 
 ## Rephrasing the requirements
 
+Three features are a must for our application, they relate to the user experience and the different functionalities needed for an administrator to operate and manage cinema reservations. Those three features are as followed:
 
-## Selected features
+- As a customer, I can book a screening for an upcoming movie
+- As an administrator, I can prepare the schedule of movie screenings
+- As an administrator, I can see accounting details for a given period
+
+First of all, this project must have two different sides: a customer side that will be the public and an administrator side. Accounts with the correct rights for the administrators are therefore required.
+
+## Analysis of the features
+
+For each features, here is the analysis of the requirements that need to be met in order to succesfully implement the feature.
+
+### Book a screening for an upcoming movie:
+We will need to implement a time management tool in order to classify movies as upcoming or ended. Many clients may want to book a ticket to the same screening at the same time, it is then essential for us to create a special status and management for unconfirmed bookings in order to prevent the oversale of tickets.
+Booking implies the implementation of a payment and confirmation system.
+
+### Prepare the schedule of movie screenings:
+Given information about the movies that wished to be scheduled we will implement, without a front-end, a way to add movies to each room without there being overlaps between sessions. Information about movies will be taken via an API that will be from TMDB. With this information we will be able to recover the duration of the film and establish the time at which the screening will end.
+
+### Accounting details:
+Accounting details will be provided to administrators using the screening history and supplementary revenues from the other activities of the cinema. Graphs will be provided in order to have them be implemented later in the front-end by the other team.
+
+Those three features mean, in technical terms, creating a backend that will be able to support a comprehensive frontend for customers to reach our cinema (that will be developed as a separate project). This can be translated by the existence of our personal API that will communicate information to the frontend of the application. It also means having a separate system dedicated for the administrators where the schedule can be made and information stored. Lastly, those features imply access to an external API in order to properly set schedules and have automatic and unique information about movies to present to the customers.
+In order to use the limited requests of the TMDB API efficiently, we will establish a private database via POSTGRE SQL to store data about movies that will be screened. It will also be useful to track user actions (seen movies, posted comments…) in order to provide a more personal experience.
+
+## Implementation of the features
 
 ### Priority features
 
+Here are the features that are at the core of the application's design: 
 
-### Features included if time allows
+#### User features:
+For the customer, we will implement different features which will mainly be having access to the scheduled movies, seeing information about said movies, and being able to book a screening. An important part of this will be the query system that will allow the customer to search screenings by name of movie, genre, length, date and time of screening (maybe more).
 
+The user will also be able to create an account to enjoy rating and writing comments about seen movies, have a friend list and be able to interact with them. It will be possible to establish one with an email address, pseudonym and password. Implementing this will mean having to implement a database corresponding to the movies seen by the user and a secure way to add them to the seen list to avoid review bombing on the future website.
+Finally, a payment system will be implemented in order to have a fully functional back-end that will fit all the needs of our customer.
 
-### Features excluded
+#### Admin specific features: 
+Administrator accounts will be the same as user accounts, allowing them to also interact socially, but will have access to more features. Those features are mainly: establishing a schedule for the different rooms, being able to modify the pricing and also have the ability to check accounting details in order to run the cinema efficiently. 
+Accounting details will not provide official documents but statistics about what the administrator would want to know. A search per time interval, movie and genre will be implemented.
+A summary of the statistics we wish to implement:
+
+- number of tickets sold
+- turnover
+- theatre occupancy rate
+- sales per film
+- sales per screening
+- sales per day/week/month
+- average ticket price
+
+### API uses
+
+#### Movie informations:
+The list of scheduled movies being quite small and the potential userflow of the website quite high, we will import the movie data once on a personal database that will then be accessible without external constraints. TMDB’s API provides the summary in french and the french name of the movie.
+Using an external API will allow us to provide the customer with all the information about any movie that the cinema will provide, for example its duration, actors, rating, trailer, box office, ratings and more.
+
+#### Payment system:
+We will implement a working payment system using Stripe. This method will allow us to implement a way to confirm bookings without having to worry about the privacy of the credit cards.
+
+### Features included if time allows:
+For the moment we do not plan to implement a system to let the customer choose their seats. This method is quite common and already in place at Bruz's cinema. However, if time allows, it would be a plus that would help us provide a better experience for motivated customers.
+
+### Features excluded:
+In this project, we will not allow the customers to cancel their bookings nor get a refund. We will also not send confirmation emails but rather provide the customer with a confirmation screen and access to its bookings.
 
 ## Summary: Use case diagram
 
+To summarize, here is the use case diagram:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{use_case_diagram.png}
+\caption{Use case diagram: features available for users}
+\label{fig:use_case}
+\end{figure}
 
 # Part 2 – Technical-Functional Layout
 
@@ -144,27 +206,30 @@ The Accounting Module collects sales data and tracks financial performance. This
 
 For both Total Revenue and Number of Tickets Sold, you can filter data by selecting a start date and an end date. You can also view results by day, week, or month with a graph to identify seasonal trends and follow performance over time.
 
-
-
 ## Overall structure and integration with third-party services
-
-
-## Justification of technical choices
 
 
 # Part 3 – Technical Design
 
-## Architecture diagram
-
-
-
 ## Data model
 
+Here is the data model of our databases:
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{data_model.png}
+\caption{Data model: structure of the application's database}
+\label{fig:data_model}
+\end{figure}
+
+Each database contains an exclusive id, external ids and information that will need to be provided to the different users. "Movies watched" is only to keep track of the movies each user has watched and therefore will not be turned into a python object but rather a list of objects extracted from the database. 
+"Tariffs" and "Rooms" will allow administrators to change the tariffs provided and information about new and existing rooms.
 
 ## Class diagram
 
+Here is the class diagram of our application:
 
+The core idea is to separate the layers of activity to improve testability and separation of concerns. We thus have business objects which are modified and created via a dedicated service class that will communicate to a dedicated DAO class in order to access the database.
 
 
 ## Activity diagrams
