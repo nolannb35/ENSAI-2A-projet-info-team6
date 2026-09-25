@@ -1,80 +1,32 @@
-from utils.log_utils import get_logger, log
-from utils.singleton import Singleton
+from typing import Optional
 
-from DAO.DBConnector import DBConnector
-from Model.Movie import Movie
+from src.Model.Movie import Movie
 
-logger = get_logger(__name__)
+from .DBConnector import DBConnector
 
 
-class MovieDao(metaclass=Singleton):
-    """Class containing methods to access Movies in the database."""
+class MovieRepo:
+    db_connector: DBConnector
 
-    @log
-    def find_by_id(self, id_movie: int) -> Movie:
-        """Find a movie by its id.
-        Args:
-            id_movie (int): The ID of the movie to find
-        Returns:
-            Movie matching the given id
-        """
-        try:
-            with DBConnector().connector as connector:
-                with connector.cursor() as cursor:
-                    cursor.execute(
-                        "SELECT *                            "
-                        "  FROM movie                       "
-                        " WHERE id_movie = %(id_movie)s;   ",
-                        {"id_movie": id_movie},
-                    )
-                    res = cursor.fetchone()
-        except Exception as e:
-            logger.error(e)
-            raise
+    def __init__(self, db_connector: DBConnector):
+        self.db_connector = db_connector
 
-        movie = None
-        if res:
-            movie = Movie(
-                id=res["id"],
-                original_title=res["original_title"],
-                length=res["length"],
-                genre=res["genre"],
-                plot=res["plot"],
-                
-            )
+    def get_by_id(self, movie_id: int) -> Optional[Movie]:
+        raw_movie = self.db_connector.sql_query(
+            "SELECT * FROM movie WHERE movie_id=%s", [movie_id], "one"
+        )
+        if raw_movie is None:
+            return None
+        # pyrefly: ignore
+        return Movie(**raw_movie)
 
-        return movie
-
-    @log
-    def find_by_title(self, title: str) -> list[Movie]:
-        """Find a movie by its title.
-        Args:
-            title (str): The title (or part of the title) of the movie to find
-        Returns:
-            list[Movie]: Movies matching the title, empty list if none
-        """
-        try:
-            with DBConnector().connector as connector:
-                with connector.cursor() as cursor:
-                    cursor.execute(
-                        "SELECT *                                  "
-                        "  FROM movie                              "
-                        " WHERE original_title ILIKE %(title)s     "
-                        " ORDER BY original_title;                 ",
-                        {"title": f"%{title}%"},
-                    )
-                    res = cursor.fetchall()
-        except Exception as e:
-            logger.error(e)
-            raise
-
-        return [
-            Movie(
-                movie_id=row["movie_id"],
-                original_title=row["original_title"],
-                length=row["length"],
-                genre=row["genre"],
-                plot=row["plot"],
-            )
-            for row in res
-        ]
+    def get_by_title(self, title: str) -> list[Movie]:
+        raw_movies = self.db_connector.sql_query(
+            "SELECT * FROM movie WHERE original_title ILIKE %s ORDER BY original_title",
+            [f"%{title}%"],
+            "all",
+        )
+        if raw_movies is None:
+            return []
+        # pyrefly: ignore
+        return [Movie(**raw_movie) for raw_movie in raw_movies]
