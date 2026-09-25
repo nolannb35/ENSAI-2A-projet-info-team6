@@ -42,3 +42,37 @@ class MovieDao(metaclass=Singleton):
             )
 
         return movie
+
+    @log
+    def find_by_title(self, title: str) -> list[Movie]:
+        """Find a movie by its title.
+        Args:
+            title (str): The title (or part of the title) of the movie to find
+        Returns:
+            list[Movie]: Movies matching the title, empty list if none
+        """
+        try:
+            with DBConnector().connector as connector:
+                with connector.cursor() as cursor:
+                    cursor.execute(
+                        "SELECT *                                  "
+                        "  FROM movie                              "
+                        " WHERE original_title ILIKE %(title)s     "
+                        " ORDER BY original_title;                 ",
+                        {"title": f"%{title}%"},
+                    )
+                    res = cursor.fetchall()
+        except Exception as e:
+            logger.error(e)
+            raise
+
+        return [
+            Movie(
+                original_title=row["original_title"],
+                length=row["length"],
+                genre=row["genre"],
+                plot=row["plot"],
+                id_movie=row["id_movie"],
+            )
+            for row in res
+        ]
