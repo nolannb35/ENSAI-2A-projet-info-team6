@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 
 class Movie(BaseModel):
-    id: int
+    movie_id: int
     original_title: str
     length: int
     genre: str
