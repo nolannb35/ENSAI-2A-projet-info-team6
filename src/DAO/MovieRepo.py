@@ -1,7 +1,8 @@
-from business_object.movie import Movie
-from dao.DBConnector import DBConnector
 from utils.log_utils import get_logger, log
 from utils.singleton import Singleton
+
+from DAO.DBConnector import DBConnector
+from Model.Movie import Movie
 
 logger = get_logger(__name__)
 
@@ -34,11 +35,12 @@ class MovieDao(metaclass=Singleton):
         movie = None
         if res:
             movie = Movie(
+                id=res["id"],
                 original_title=res["original_title"],
                 length=res["length"],
                 genre=res["genre"],
                 plot=res["plot"],
-                id_movie=res["id_movie"],
+                
             )
 
         return movie
@@ -68,11 +70,11 @@ class MovieDao(metaclass=Singleton):
 
         return [
             Movie(
+                movie_id=row["movie_id"],
                 original_title=row["original_title"],
                 length=row["length"],
                 genre=row["genre"],
                 plot=row["plot"],
-                id_movie=row["id_movie"],
             )
             for row in res
         ]
