@@ -38,7 +38,7 @@ class MovieDao(metaclass=Singleton):
                 length=res["length"],
                 genre=res["genre"],
                 plot=res["plot"],
-                id_movie=res["id_player"],
+                id_movie=res["id_movie"],
             )
 
         return movie
