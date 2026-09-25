@@ -3,12 +3,11 @@ from typing import TYPE_CHECKING, Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials
 
+from src.App.init_app import jwt_service, user_repo, user_service
+from src.App.JWTBearer import JWTBearer
 from src.Model.APIUser import APIUser
 from src.Model.JWTResponse import JWTResponse
 from src.Service.PasswordService import check_password_strength, validate_username_password
-
-from .init_app import jwt_service, user_repo, user_service
-from .JWTBearer import JWTBearer
 
 if TYPE_CHECKING:
     from src.Model.User import User

@@ -2,8 +2,8 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 
-from .MovieController import movie_router
-from .UserController import user_router
+from src.Control.MovieControl import movie_router
+from src.Control.UserControl import user_router
 
 
 def run_app():
