@@ -1,15 +1,18 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 
-from src.Model.Movie import Movie
+from src.Service.MovieService import MovieService
 
 movie_router = APIRouter(prefix="/movies", tags=["Movies"])
 
+def get_player_service():
+    """Dependency provider."""
+    return MovieService()
 
 @movie_router.get("/{tmdb_id}", status_code=status.HTTP_200_OK)
 def get_movie_by_id(tmdb_id: int):
+    movie_service = Depends(get_player_service)
     try:
-        # my_movie = movie_service.get_by_id(tmdb_id)
-        my_movie = Movie(original_title="The Wild Robot", id=1)
+        my_movie = movie_service.get_by_id(tmdb_id)
         return my_movie
     except FileNotFoundError:
         raise HTTPException(
