@@ -1,8 +1,8 @@
 from DBConnector import DBConnector
-from utils.log_utils import get_logger, log
-from utils.singleton import Singleton
 
 from Model.Booking import Booking
+from utils.log_utils import get_logger, log
+from utils.singleton import Singleton
 
 logger = get_logger(__name__)
 
@@ -108,14 +108,14 @@ class BookingDao(metaclass=Singleton):
         bookings_list = []
 
         if res:
-            for row in res:
+            for r in res:
                 booking = Booking(
-                booking_id=res["booking_id"],
-                user_id = res["user_id"],
-                screening_id = res["screening_id"],
-                tarif_id = res["tarif_id"],
-                date_booking = res["date_booking"],
-                booking_name = res["booking_name"]
+                booking_id=r["booking_id"],
+                user_id = r["user_id"],
+                screening_id = r["screening_id"],
+                tarif_id = r["tarif_id"],
+                date_booking = r["date_booking"],
+                booking_name = r["booking_name"]
                 )
 
                 bookings_list.append(booking)
@@ -148,14 +148,14 @@ class BookingDao(metaclass=Singleton):
         bookings_list = []
 
         if res:
-            for row in res:
+            for r in res:
                 booking = Booking(
-                booking_id=res["booking_id"],
-                user_id = res["user_id"],
-                screening_id = res["screening_id"],
-                tarif_id = res["tarif_id"],
-                date_booking = res["date_booking"],
-                booking_name = res["booking_name"]
+                booking_id=r["booking_id"],
+                user_id = r["user_id"],
+                screening_id = r["screening_id"],
+                tarif_id = r["tarif_id"],
+                date_booking = r["date_booking"],
+                booking_name = r["booking_name"]
                 )
 
                 bookings_list.append(booking)
@@ -185,14 +185,14 @@ class BookingDao(metaclass=Singleton):
         bookings_list = []
 
         if res:
-            for row in res:
+            for r in res:
                 booking = Booking(
-                booking_id=res["booking_id"],
-                user_id = res["user_id"],
-                screening_id = res["screening_id"],
-                tarif_id = res["tarif_id"],
-                date_booking = res["date_booking"],
-                booking_name = res["booking_name"]
+                booking_id=r["booking_id"],
+                user_id = r["user_id"],
+                screening_id = r["screening_id"],
+                tarif_id = r["tarif_id"],
+                date_booking = r["date_booking"],
+                booking_name = r["booking_name"]
                 )
 
                 bookings_list.append(booking)
