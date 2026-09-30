@@ -2,47 +2,30 @@ import os
 
 import requests
 
+from src.Model.movie import Movie
 
-def research_api_by_title(movie_title):
-
-    url = "https://api.themoviedb.org/3/search/movie"
-
-    params = {
-        "api_key": os.environ["API_KEY"],
-        "query": movie_title,
-        "language": "fr-FR"
-    }
-
-    data = requests.get(url, params=params).json()
-
-    if data.get("results"):
-
-        movie_id = data["results"][0]["id"]
-
-        url = f"https://api.themoviedb.org/3/movie/{movie_id}"
+BASE_URL = "https://api.themoviedb.org/3"
 
 
-        details = requests.get(url, params=params).json()
+class MovieWebservice:
+    def __init__(self):
+        self.params = {"api_key": os.environ["API_KEY"], "language": "fr-FR"}
 
-        plot = details["overview"]
-        runtime = details["runtime"]
-        title = details["title"]
+    def get_movie_by_title(self, title):
+        search = requests.get(
+            f"{BASE_URL}/search/movie", params={**self.params, "query": title}
+        ).json()
 
-        genres = [genre["name"] for genre in details["genres"]]
-        information = dict()
-        information["overview"] = plot
-        information["runtime"] = runtime
-        information["id"] = movie_id
-        information["title"] = title
-        information["genres"] = genres
+        if not search["results"]:
+            return None
 
-        return information
+        movie_id = search["results"][0]["id"]
+        details = requests.get(f"{BASE_URL}/movie/{movie_id}", params=self.params).json()
 
-    else:
-        print("Aucun film trouvé")
-        return None
-
-
-result = research_api_by_title("Underground")
-
-print(result)
+        return Movie(
+            movie_id=movie_id,
+            original_title=details["original_title"],
+            length=details["runtime"] or 0,
+            genre=", ".join(genre["name"] for genre in details["genres"]),
+            plot=details["overview"],
+        )
