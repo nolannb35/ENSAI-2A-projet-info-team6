@@ -5,7 +5,7 @@ from src.Model.Movie import Movie
 
 
 class MovieService:
-    """Business logic about movies. Accesses the database through MovieDao."""
+    """Business logic about movies. Accesses the database through MovieRepo."""
 
     def get_by_id(self, movie_id: int) -> Optional[Movie]:
         return MovieRepo().find_by_id(movie_id)

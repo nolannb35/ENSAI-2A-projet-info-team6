@@ -1,13 +1,12 @@
-from DBConnector import DBConnector
-
-from Model.Booking import Booking
-from utils.log_utils import get_logger, log
-from utils.singleton import Singleton
+from src.DAO.DBConnector import DBConnector
+from src.Model.Booking import Booking
+from src.utils.log_utils import get_logger, log
+from src.utils.singleton import Singleton
 
 logger = get_logger(__name__)
 
 
-class BookingDao(metaclass=Singleton):
+class BookingRepo(metaclass=Singleton):
     """Class containing methods to access Bookings in the database."""
 
     @log
@@ -218,7 +217,7 @@ class BookingDao(metaclass=Singleton):
                         "       screening_id = %(screening_id)s,"
                         "       tarif_id = %(tarif_id)s,"
                         "       date_booking = %(date_booking)s,"
-                        "       booking_name = %(booking_name)s,"
+                        "       booking_name = %(booking_name)s"
                         " WHERE booking_id = %(booking_id)s;",
                         {
                             "user_id": booking.user_id,

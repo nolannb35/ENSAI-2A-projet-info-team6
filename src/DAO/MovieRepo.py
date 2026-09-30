@@ -1,8 +1,8 @@
-from DBConnector import DBConnector
+from src.DBConnector import DBConnector
 
-from Model.Movie import Movie
-from utils.log_utils import get_logger, log
-from utils.singleton import Singleton
+from src.Model.Movie import Movie
+from src.utils.log_utils import get_logger, log
+from src.utils.singleton import Singleton
 
 logger = get_logger(__name__)
 
