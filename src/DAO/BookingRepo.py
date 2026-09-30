@@ -200,7 +200,7 @@ class BookingRepo(metaclass=Singleton):
 
     @log
     def update(self, booking) -> bool:
-        """Update a player in the database.
+        """Update a booking in the database.
         Args:
             Booking to be updated
         Returns:
@@ -212,7 +212,7 @@ class BookingRepo(metaclass=Singleton):
             with DBConnector().connection as connection:
                 with connection.cursor() as cursor:
                     cursor.execute(
-                        "UPDATE booking"
+                        "UPDATE bookings"
                         "   SET user_id = %(user_id)s,"
                         "       screening_id = %(screening_id)s,"
                         "       tarif_id = %(tarif_id)s,"
