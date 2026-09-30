@@ -1,5 +1,4 @@
-from src.DBConnector import DBConnector
-
+from src.DAO.DBConnector import DBConnector
 from src.Model.Movie import Movie
 from src.utils.log_utils import get_logger, log
 from src.utils.singleton import Singleton
