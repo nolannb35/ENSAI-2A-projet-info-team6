@@ -5,13 +5,16 @@ from src.Model.Movie import Movie
 
 
 class MovieService:
-    movie_db: MovieRepo
-
-    def __init__(self, movie_db: MovieRepo):
-        self.movie_db = movie_db
+    """Business logic about movies. Accesses the database through MovieDao."""
 
     def get_by_id(self, movie_id: int) -> Optional[Movie]:
-        return self.movie_db.get_by_id(movie_id)
+        return MovieRepo().find_by_id(movie_id)
 
     def get_by_title(self, title: str) -> list[Movie]:
-        return self.movie_db.get_by_title(title)
+        return MovieRepo().find_by_title(title)
+
+    def get_by_genre(self, genre: str) -> list[Movie]:
+        return MovieRepo().find_by_genre(genre)
+
+    def get_all(self) -> list[Movie]:
+        return MovieRepo().find_all()

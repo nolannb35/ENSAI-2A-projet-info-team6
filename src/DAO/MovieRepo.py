@@ -1,13 +1,13 @@
 from DBConnector import DBConnector
-from utils.log_utils import get_logger, log
-from utils.singleton import Singleton
 
 from Model.Movie import Movie
+from utils.log_utils import get_logger, log
+from utils.singleton import Singleton
 
 logger = get_logger(__name__)
 
 
-class MovieDao(metaclass=Singleton):
+class MovieRepo(metaclass=Singleton):
     """Class containing methods to access Movies in the database."""
 
     @log
@@ -241,8 +241,7 @@ class MovieDao(metaclass=Singleton):
             with DBConnector().connection as connection:
                 with connection.cursor() as cursor:
                     cursor.execute(
-                        "DELETE FROM movies                "
-                        " WHERE movie_id = %(movie_id)s;   ",
+                        "DELETE FROM movies                 WHERE movie_id = %(movie_id)s;   ",
                         {"movie_id": movie.movie_id},
                     )
                     res = cursor.rowcount
