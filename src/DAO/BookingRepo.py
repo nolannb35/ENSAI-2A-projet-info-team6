@@ -4,12 +4,10 @@ from utils.singleton import Singleton
 
 from Model.Booking import Booking
 
-from .UserRepo import UserRepo
-
 logger = get_logger(__name__)
 
 
-class BookingDao(metaclass=Singleton):
+class BookingRepo(metaclass=Singleton):
     """Class containing methods to access Bookings in the database."""
 
     # Should be done
@@ -172,14 +170,14 @@ class BookingDao(metaclass=Singleton):
         bookings_list = []
 
         if res:
-            for row in res:
+            for r in res:
                 booking = Booking(
-                    booking_id=res["booking_id"],
-                    user_id=res["user_id"],
-                    screening_id=res["screening_id"],
-                    tarif_id=res["tarif_id"],
-                    date_booking=res["date_booking"],
-                    booking_name=res["booking_name"],
+                booking_id=r["booking_id"],
+                user_id = r["user_id"],
+                screening_id = r["screening_id"],
+                tarif_id = r["tarif_id"],
+                date_booking = r["date_booking"],
+                booking_name = r["booking_name"]
                 )
 
                 bookings_list.append(booking)
@@ -211,14 +209,14 @@ class BookingDao(metaclass=Singleton):
         bookings_list = []
 
         if res:
-            for row in res:
+            for r in res:
                 booking = Booking(
-                    booking_id=res["booking_id"],
-                    user_id=res["user_id"],
-                    screening_id=res["screening_id"],
-                    tarif_id=res["tarif_id"],
-                    date_booking=res["date_booking"],
-                    booking_name=res["booking_name"],
+                booking_id=r["booking_id"],
+                user_id = r["user_id"],
+                screening_id = r["screening_id"],
+                tarif_id = r["tarif_id"],
+                date_booking = r["date_booking"],
+                booking_name = r["booking_name"]
                 )
 
                 bookings_list.append(booking)
@@ -249,14 +247,14 @@ class BookingDao(metaclass=Singleton):
         bookings_list = []
 
         if res:
-            for row in res:
+            for r in res:
                 booking = Booking(
-                    booking_id=res["booking_id"],
-                    user_id=res["user_id"],
-                    screening_id=res["screening_id"],
-                    tarif_id=res["tarif_id"],
-                    date_booking=res["date_booking"],
-                    booking_name=res["booking_name"],
+                booking_id=r["booking_id"],
+                user_id = r["user_id"],
+                screening_id = r["screening_id"],
+                tarif_id = r["tarif_id"],
+                date_booking = r["date_booking"],
+                booking_name = r["booking_name"]
                 )
 
                 bookings_list.append(booking)
@@ -266,7 +264,7 @@ class BookingDao(metaclass=Singleton):
     # Need to modify parameters
     @log
     def update(self, booking) -> bool:
-        """Update a player in the database.
+        """Update a booking in the database.
         Args:
             Booking to be updated
         Returns:
@@ -278,12 +276,12 @@ class BookingDao(metaclass=Singleton):
             with DBConnector().connection as connection:
                 with connection.cursor() as cursor:
                     cursor.execute(
-                        "UPDATE booking"
+                        "UPDATE bookings"
                         "   SET user_id = %(user_id)s,"
                         "       screening_id = %(screening_id)s,"
                         "       tarif_id = %(tarif_id)s,"
                         "       date_booking = %(date_booking)s,"
-                        "       booking_name = %(booking_name)s,"
+                        "       booking_name = %(booking_name)s"
                         " WHERE booking_id = %(booking_id)s;",
                         {
                             "user_id": booking.user_id,

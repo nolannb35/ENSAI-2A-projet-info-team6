@@ -25,7 +25,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE movies (
-    movie_id  INTEGER NOT NULL,
+    movie_id  INTEGER PRIMARY KEY,
     title     TEXT NOT NULL,
     runtime   INTEGER NOT NULL,
     genre     TEXT,

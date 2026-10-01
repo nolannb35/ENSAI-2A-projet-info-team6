@@ -1,7 +1,7 @@
 -----------------------------------------------------
 -- Données d'exemple
 -----------------------------------------------------
-trtllchmst
+
 -- Utilisateurs
 INSERT INTO users (username, email, password, administrator) VALUES
 ('alice',   'alice@mail.com',   'hashed_pwd_1', TRUE),
@@ -12,7 +12,7 @@ INSERT INTO users (username, email, password, administrator) VALUES
 
 -- Films
 INSERT INTO movies (movie_id, title, runtime, genre, plot) VALUES
-(1, 'Dune: Part Two',    166, 'Science-fiction', 'Paul Atreides s'unit aux Fremen pour se venger.'),
+(1, 'Dune: Part Two',    166, 'Science-fiction', 'Paul Atreides s''unit aux Fremen pour se venger.'),
 (2, 'Oppenheimer',       180, 'Biopic',          'La vie du physicien derrière la bombe atomique.'),
 (3, 'Le Fabelmans',      151, 'Drame',           'Un jeune garçon découvre sa passion pour le cinéma.'),
 (4, 'Barbie',            114, 'Comédie',         'Barbie quitte Barbieland pour le monde réel.'),
