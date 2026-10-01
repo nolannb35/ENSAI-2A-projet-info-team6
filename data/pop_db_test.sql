@@ -39,13 +39,18 @@ INSERT INTO screenings (movie_id, room_id, date, start_time, end_time, version, 
 (4, 1, '2026-09-27', '2026-09-27 20:00:00+02', '2026-09-27 21:54:00+02', 'VF', 70, 84000);
 
 -- Réservations (liens users <-> screenings <-> pricings)
-INSERT INTO bookings (user_id, screening_id, pricing_id, time_of_booking) VALUES
-(1, 1, 1, '2026-09-20 10:15:00+02'),
-(2, 1, 2, '2026-09-21 14:00:00+02'),
-(3, 3, 1, '2026-09-22 09:30:00+02'),
-(4, 4, 3, '2026-09-23 16:45:00+02'),
-(5, 5, 1, '2026-09-24 11:20:00+02'),
-(1, 5, 2, '2026-09-24 18:00:00+02');
+INSERT INTO bookings (screening_id, time_of_booking) VALUES
+(1, '2026-09-20 10:15:00+02'),
+(2, '2026-09-21 14:00:00+02'),
+(1, '2026-09-22 09:30:00+02'),
+(3, '2026-09-23 16:45:00+02'),
+(1, '2026-09-24 11:20:00+02'),
+(2, '2026-09-24 18:00:00+02');
+
+INSERT INTO booking_user (booking_id, user_id, pricing_id) VALUES
+(1, 3, 1),
+(2, 3, 2),
+(3, 1, 1)
 
 -- Commentaires (liens users <-> movies)
 INSERT INTO comments (user_id, movie_id, content, star, spoiler) VALUES
