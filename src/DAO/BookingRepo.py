@@ -1,8 +1,7 @@
-from DBConnector import DBConnector
-from utils.log_utils import get_logger, log
-from utils.singleton import Singleton
-
-from Model.Booking import Booking
+from src.DAO.DBConnector import DBConnector
+from src.Model.Booking import Booking
+from src.utils.log_utils import get_logger, log
+from src.utils.singleton import Singleton
 
 logger = get_logger(__name__)
 
