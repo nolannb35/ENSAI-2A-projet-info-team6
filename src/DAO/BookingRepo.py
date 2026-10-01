@@ -217,8 +217,7 @@ class BookingRepo(metaclass=Singleton):
                 with connection.cursor() as cursor:
                     # Suppression des anciennes lignes
                     cursor.execute(
-                        "DELETE FROM booking_user"
-                        " WHERE booking_id = %(booking_id)s;",
+                        "DELETE FROM booking_user WHERE booking_id = %(booking_id)s;",
                         {"booking_id": booking.booking_id},
                     )
 
@@ -389,7 +388,6 @@ class BookingRepo(metaclass=Singleton):
 
         return bookings_list
 
-    # Need to raise errors
     @log
     def delete(self, booking: Booking) -> bool:
         """Deletes a booking from the database.
@@ -402,14 +400,10 @@ class BookingRepo(metaclass=Singleton):
 
         if deleted_bookings:
             deleted_booking_user = BookingRepo().delete_booking_user(booking)
+            if deleted_booking_user:
+                return True
+        return False
 
-            #if not deleted_booking_user:
-                #raise error
-        #else:
-            #raise error
-        return deleted_booking_user
-
-    # Need to raise errors
     @log
     def update(self, booking: Booking) -> bool:
         """Updates a booking from the database.
@@ -422,14 +416,10 @@ class BookingRepo(metaclass=Singleton):
 
         if updated_bookings:
             updated_booking_user = BookingRepo().update_booking_user(booking)
+            if updated_booking_user:
+                return True
+        return False
 
-            #if not updated_booking_user:
-                #raise error
-        #else:
-            #raise error
-        return updated_booking_user
-
-    # Need to raise errors
     @log
     def create(self, booking: Booking) -> bool:
         """Create a booking in bookings and the association table booking_user
@@ -444,8 +434,4 @@ class BookingRepo(metaclass=Singleton):
             created_2 = BookingRepo().create_booking_user(booking)
             if created_2:
                 return True
-            #else:
-                #Faire remonter une errur
-        # else:
-        # Faire remonter une erreur
-
+        return False
