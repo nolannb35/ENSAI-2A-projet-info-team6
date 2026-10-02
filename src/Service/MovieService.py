@@ -1,7 +1,9 @@
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 
 from src.DAO.MovieRepo import MovieRepo
-from src.Model.Movie import Movie
+
+if TYPE_CHECKING:
+    from src.Model.Movie import Movie
 
 
 class MovieService:

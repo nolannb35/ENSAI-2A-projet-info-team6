@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from typing import TYPE_CHECKING
 
 from src.DAO.DBConnector import DBConnector
@@ -10,6 +11,7 @@ from src.utils.singleton import Singleton
 
 if TYPE_CHECKING:
     from src.Model.Pricing import Pricing
+    from src.Model.Screening import Screening
     from src.Model.User import User
 
 
@@ -18,96 +20,6 @@ logger = get_logger(__name__)
 
 class BookingRepo(metaclass=Singleton):
     """Class containing methods to access Bookings in the database."""
-
-    # Ici se trouvent les methodes concernant la table bookings uniquement :
-    @log
-    def create_bookings(self, booking: Booking) -> bool:
-        """Create a booking in the database.
-        Args:
-            Booking to create
-        Returns:
-            True if creation is successful, False otherwise
-        """
-        res = None
-
-        try:
-            with DBConnector().connection as connection:
-                with connection.cursor() as cursor:
-                    cursor.execute(
-                        "INSERT INTO bookings(screening_id, date_booking) VALUES "
-                        "(%(screening_id)s, %(date_booking)s) "
-                        "RETURNING booking_id;",
-                        {
-                            "screening_id": booking.screening.screening_id,
-                            "date_booking": booking.date_booking,
-                        },
-                    )
-                    res = cursor.fetchone()
-        except Exception as e:
-            logger.error(e)
-            raise
-
-        created = False
-        if res:
-            booking.booking_id = res["id_booking"]
-            created = True
-
-        return created
-
-    @log
-    def delete_bookings(self, booking: Booking) -> bool:
-        """Deletes a booking from bookings.
-        Args:
-            Booking to delete from the database
-        Returns:
-            True if the booking was successfully deleted, False otherwise
-        """
-
-        try:
-            with DBConnector().connection as connection:
-                with connection.cursor() as cursor:
-                    cursor.execute(
-                        "DELETE FROM bookings                               "
-                        " WHERE booking_id = %(booking_id)s                 ",
-                        {"booking_id": booking.booking_id},
-                    )
-                    res = cursor.rowcount
-        except Exception as e:
-            logger.error(e)
-            raise
-
-        return res > 0
-
-    @log
-    def update_bookings(self, booking: Booking) -> bool:
-        """Update a booking in the database.
-        Args:
-            Booking to be updated
-        Returns:
-            True if update is successful, False otherwise
-        """
-        nb_affected_rows = 0
-
-        try:
-            with DBConnector().connection as connection:
-                with connection.cursor() as cursor:
-                    cursor.execute(
-                        "UPDATE bookings"
-                        "   SET screening_id = %(screening_id)s,"
-                        "       date_booking = %(date_booking)s"
-                        " WHERE booking_id = %(booking_id)s;",
-                        {
-                            "screening_id": booking.screening_id,
-                            "date_booking": booking.date_booking,
-                            "booking_id": booking.booking_id,
-                        },
-                    )
-                    nb_affected_rows = cursor.rowcount
-        except Exception as e:
-            logger.error(e)
-            raise
-
-        return nb_affected_rows == 1
 
     # Ici se trouvent les méthodes de booking_user:
 
@@ -141,104 +53,6 @@ class BookingRepo(metaclass=Singleton):
                 list_user_pricing.append({"user": user, "pricing": pricing})
 
         return list_user_pricing
-
-    @log
-    def create_booking_user(self, booking: Booking) -> bool:
-        """Create the association in the booking_user association table.
-        Args:
-            Booking to associate (with booking_id from create_bookings)
-        Returns:
-            True if association is successful, False otherwise
-        """
-        res = None
-        total = 0
-        nb_people = len(booking.user_pricing)
-        for user_pricing_dict in booking.user_pricing:
-            try:
-                with DBConnector().connection as connection:
-                    with connection.cursor() as cursor:
-                        cursor.execute(
-                            "INSERT INTO booking_user(booking_id, user_id, pricing_id) VALUES "
-                            "(%(booking_id)s, %(user_id)s, %(pricing_id)s) "
-                            "RETURNING booking_id;",
-                            {
-                                "booking_id": booking.booking_id,
-                                "user_id": user_pricing_dict["user"].user_id,
-                                "pricing_id": user_pricing_dict["pricing"].pricing_id,
-                            },
-                        )
-                        res = cursor.fetchone()
-            except Exception as e:
-                logger.error(e)
-                raise
-
-            if res:
-                total = total + 1
-
-        created = False
-        if total == nb_people:
-            created = True
-
-        return created
-
-    @log
-    def delete_booking_user(self, booking: Booking) -> bool:
-        """Deletes a booking from booking_user.
-        Args:
-            Booking to delete from the database
-        Returns:
-            True if the booking was successfully deleted, False otherwise
-        """
-        try:
-            with DBConnector().connection as connection:
-                with connection.cursor() as cursor:
-                    cursor.execute(
-                        "DELETE FROM booking_user                           "
-                        " WHERE booking_id = %(booking_id)s                 ",
-                        {"booking_id": booking.booking_id},
-                    )
-                    res = cursor.rowcount
-        except Exception as e:
-            logger.error(e)
-            raise
-
-        return res > 0
-
-    @log
-    def update_booking_user(self, booking: Booking) -> bool:
-        """Replace all users/pricings of a booking in the database.
-        Args:
-            booking: Booking whose users must be synchronized
-        Returns:
-            True if update is successful, False otherwise
-        """
-        try:
-            with DBConnector().connection as connection:
-                with connection.cursor() as cursor:
-                    # Suppression des anciennes lignes
-                    cursor.execute(
-                        "DELETE FROM booking_user WHERE booking_id = %(booking_id)s;",
-                        {"booking_id": booking.booking_id},
-                    )
-
-                    # Réinsertion des nouvelles
-                    rows = [
-                        {
-                            "booking_id": booking.booking_id,
-                            "user_id": user_pricing["user"].user_id,
-                            "pricing_id": user_pricing["pricing"].pricing_id,
-                        }
-                        for user_pricing in booking.user_pricing
-                    ]
-                    cursor.executemany(
-                        "INSERT INTO booking_user (booking_id, user_id, pricing_id)"
-                        " VALUES (%(booking_id)s, %(user_id)s, %(pricing_id)s);",
-                        rows,
-                    )
-            return True
-        except Exception as e:
-            logger.error(e)
-            raise
 
     # Ici se trouvent les méthodes combinées permettant de garder la cohésion:
 
@@ -319,7 +133,7 @@ class BookingRepo(metaclass=Singleton):
         return bookings_list
 
     @log
-    def get_by_screening_id(self, screening_id: int) -> list[Booking]:
+    def get_by_screening(self, screening: Screening) -> list[Booking]:
         """List bookings with a certain screening_id in the database.
         Returns:
             list[Booking]
@@ -332,7 +146,7 @@ class BookingRepo(metaclass=Singleton):
                         "SELECT *                                "
                         "  FROM bookings                           "
                         " WHERE screening_id = %(screening_id)s;",
-                        {"screening_id": screening_id},
+                        {"screening_id": screening.screening_id},
                     )
                     res = cursor.fetchall()
         except Exception as e:
@@ -359,7 +173,7 @@ class BookingRepo(metaclass=Singleton):
         return bookings_list
 
     @log
-    def get_by_user_id(self, user_id: int) -> list[Booking]:
+    def get_by_user(self, user: User) -> list[Booking]:
         """List bookings with a certain user_id in the database.
         Returns:
             list[Booking]
@@ -372,7 +186,7 @@ class BookingRepo(metaclass=Singleton):
                         "SELECT *                                "
                         "  FROM booking_user                     "
                         " WHERE user_id = %(user_id)s;",
-                        {"user_id": user_id},
+                        {"user_id": user.user_id},
                     )
                     res = cursor.fetchall()
         except Exception as e:
@@ -389,49 +203,172 @@ class BookingRepo(metaclass=Singleton):
         return bookings_list
 
     @log
-    def delete(self, booking: Booking) -> bool:
-        """Deletes a booking from the database.
+    def get_by_day(self, day: date) -> list[Booking]:
+        """Get all bookings made on a given day.
         Args:
-            Booking to delete from the database
+            day: The day to search for
         Returns:
-            True if the booking was successfully deleted, False otherwise
+            List of bookings for that day (empty list if none)
         """
-        deleted_bookings = BookingRepo().delete_bookings(booking)
+        try:
+            with DBConnector().connection as connection:
+                with connection.cursor() as cursor:
+                    cursor.execute(
+                        "SELECT *       "
+                        "  FROM bookings"
+                        " WHERE date_booking >= %(start)s"
+                        "   AND date_booking <  %(end)s"
+                        " ORDER BY date_booking;",
+                        {"start": day, "end": day + timedelta(days=1)},
+                    )
+                    booking_rows = cursor.fetchall()
 
-        if deleted_bookings:
-            deleted_booking_user = BookingRepo().delete_booking_user(booking)
-            if deleted_booking_user:
-                return True
-        return False
+                    bookings = []
+                    for row in booking_rows:
+                        user_pricing = BookingRepo().get_user_and_pricing_by_booking_id(row["booking_id"])
+
+                        bookings.append(
+                            Booking(
+                                booking_id=row["booking_id"],
+                                screening=ScreeningRepo().get_by_id(row["screening_id"]),
+                                date_booking=row["date_booking"],
+                                user_pricing=user_pricing,
+                            )
+                        )
+        except Exception as e:
+            logger.error(e)
+            raise
+
+        return bookings
+
+    @log
+    def delete(self, booking: Booking) -> bool:
+        """Delete a booking and its user associations in a single transaction.
+        Args:
+            booking: Booking to delete from the database
+        Returns:
+            True if the booking was deleted, False if it did not exist
+        """
+        try:
+            with DBConnector().connection as connection:
+                with connection.cursor() as cursor:
+                    # Suppression de la table enfant (clé étrangère vers bookings)
+                    cursor.execute(
+                        "DELETE FROM booking_user  WHERE booking_id = %(booking_id)s;",
+                        {"booking_id": booking.booking_id},
+                    )
+
+                    # Suppression de la réservation elle-même
+                    cursor.execute(
+                        "DELETE FROM bookings  WHERE booking_id = %(booking_id)s;",
+                        {"booking_id": booking.booking_id},
+                    )
+                    deleted = cursor.rowcount
+
+            return deleted == 1
+
+        except Exception as e:
+            logger.error(e)
+            raise
 
     @log
     def update(self, booking: Booking) -> bool:
-        """Updates a booking from the database.
+        """Update a booking and its user associations in a single transaction.
         Args:
-            Booking to update from the database
+            booking: Booking to update
         Returns:
-            True if the booking was successfully deleted, False otherwise
+            True if the booking was updated, False if it does not exist
         """
-        updated_bookings = BookingRepo().update_bookings(booking)
+        try:
+            with DBConnector().connection as connection:
+                with connection.cursor() as cursor:
+                    # Mise à jour de la réservation
+                    cursor.execute(
+                        "UPDATE bookings"
+                        "   SET screening_id = %(screening_id)s,"
+                        "       date_booking = %(date_booking)s"
+                        " WHERE booking_id = %(booking_id)s;",
+                        {
+                            "screening_id": booking.screening.screening_id,
+                            "date_booking": booking.date_booking,
+                            "booking_id": booking.booking_id,
+                        },
+                    )
+                    if cursor.rowcount != 1:
+                        return False  # réservation introuvable : on ne touche pas à booking_user
 
-        if updated_bookings:
-            updated_booking_user = BookingRepo().update_booking_user(booking)
-            if updated_booking_user:
-                return True
-        return False
+                    # Remplacement des associations
+                    cursor.execute(
+                        "DELETE FROM booking_user WHERE booking_id = %(booking_id)s;",
+                        {"booking_id": booking.booking_id},
+                    )
+
+                    rows = [
+                        {
+                            "booking_id": booking.booking_id,
+                            "user_id": up["user"].user_id,
+                            "pricing_id": up["pricing"].pricing_id,
+                        }
+                        for up in booking.user_pricing
+                    ]
+                    if rows:
+                        cursor.executemany(
+                            "INSERT INTO booking_user (booking_id, user_id, pricing_id)"
+                            " VALUES (%(booking_id)s, %(user_id)s, %(pricing_id)s);",
+                            rows,
+                        )
+
+            return True
+
+        except Exception as e:
+            logger.error(e)
+            raise
 
     @log
     def create(self, booking: Booking) -> bool:
-        """Create a booking in bookings and the association table booking_user
+        """Create a booking and its user associations in a single transaction.
         Args:
-            Booking to create
+            booking: Booking to create
         Returns:
-            True if both creations are successful, False otherwise
+            True if the booking and all associations are created, False otherwise
         """
-        created_1 = BookingRepo().create_bookings(booking)
+        try:
+            with DBConnector().connection as connection:
+                with connection.cursor() as cursor:
+                    # Création de la réservation
+                    cursor.execute(
+                        "INSERT INTO bookings(screening_id, date_booking) VALUES "
+                        "(%(screening_id)s, %(date_booking)s) "
+                        "RETURNING booking_id;",
+                        {
+                            "screening_id": booking.screening.screening_id,
+                            "date_booking": booking.date_booking,
+                        },
+                    )
+                    res = cursor.fetchone()
+                    if not res:
+                        return False
 
-        if created_1:
-            created_2 = BookingRepo().create_booking_user(booking)
-            if created_2:
-                return True
-        return False
+                    booking_id = res["booking_id"]
+
+                    # Création des associations booking_user
+                    rows = [
+                        {
+                            "booking_id": booking_id,
+                            "user_id": up["user"].user_id,
+                            "pricing_id": up["pricing"].pricing_id,
+                        }
+                        for up in booking.user_pricing
+                    ]
+                    cursor.executemany(
+                        "INSERT INTO booking_user(booking_id, user_id, pricing_id) "
+                        "VALUES (%(booking_id)s, %(user_id)s, %(pricing_id)s);",
+                        rows,
+                    )
+
+            booking.booking_id = booking_id
+            return True
+
+        except Exception as e:
+            logger.error(e)
+            raise
