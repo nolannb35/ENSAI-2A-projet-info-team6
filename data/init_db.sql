@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE users (
     user_id        SERIAL PRIMARY KEY,
-    username       TEXT NOT NULL,
+    username       TEXT NOT NULL UNIQUE,
     email          TEXT NOT NULL UNIQUE,
     password       TEXT NOT NULL,
     administrator  BOOLEAN DEFAULT FALSE

@@ -1,70 +1,84 @@
 -----------------------------------------------------
--- Données d'exemple
+-- Users
 -----------------------------------------------------
+INSERT INTO users(user_id, username, email, password, administrator) VALUES
+(999, 'admin',   'admin@ensai-cinema.fr',  'admin',      TRUE),
+(998, 'nolann',  'nolann@mail.fr',         'nolann123',  FALSE),
+(997, 'simon',   'simon@mail.fr',          'simon123',   FALSE),
+(996, 'zoeb',    'zoeb@mail.fr',           'zoeb123',    FALSE),
+(995, 'samuel',  'samuel@mail.fr',         'samuel123',  FALSE);
 
--- Utilisateurs
-INSERT INTO users (username, email, password, administrator) VALUES
-('alice',   'alice@mail.com',   'hashed_pwd_1', TRUE),
-('bob',     'bob@mail.com',     'hashed_pwd_2', FALSE),
-('chloe',   'chloe@mail.com',   'hashed_pwd_3', FALSE),
-('david',   'david@mail.com',   'hashed_pwd_4', FALSE),
-('emma',    'emma@mail.com',    'hashed_pwd_5', FALSE);
 
--- Films
-INSERT INTO movies (movie_id, title, runtime, genre, plot) VALUES
-(1, 'Dune: Part Two',    166, 'Science-fiction', 'Paul Atreides s''unit aux Fremen pour se venger.'),
-(2, 'Oppenheimer',       180, 'Biopic',          'La vie du physicien derrière la bombe atomique.'),
-(3, 'Le Fabelmans',      151, 'Drame',           'Un jeune garçon découvre sa passion pour le cinéma.'),
-(4, 'Barbie',            114, 'Comédie',         'Barbie quitte Barbieland pour le monde réel.'),
-(5, 'Interstellar',      169, 'Science-fiction', 'Un groupe d''explorateurs voyage à travers un trou de ver.');
+-----------------------------------------------------
+-- Movies
+-----------------------------------------------------
+INSERT INTO movies(movie_id, title, runtime, genre, plot) VALUES
+(693134, 'Dune: Part Two',        166, 'Science-Fiction, Aventure',         'Paul Atreides s''allie aux Fremen pour venger sa famille et empêcher un avenir terrible.'),
+(872585, 'Oppenheimer',           181, 'Drame, Histoire',                   'Le portrait du physicien J. Robert Oppenheimer et de la création de la bombe atomique.'),
+(157336, 'Interstellar',          169, 'Aventure, Drame, Science-Fiction',  'Des explorateurs traversent un trou de ver pour trouver une nouvelle planète habitable.'),
+(346698, 'Barbie',                114, 'Comédie, Aventure',                 'Barbie quitte Barbieland et découvre le monde réel.'),
+(915935, 'Anatomie d''une chute', 152, 'Thriller, Drame',                   'Une écrivaine est accusée de la mort de son mari, retrouvé au pied de leur chalet.');
 
--- Salles
-INSERT INTO rooms (capacity) VALUES
-(80),
-(120),
-(50);
 
--- Tarifs
-INSERT INTO pricings (name, description, price) VALUES
-('Plein tarif',   'Tarif standard adulte',        1200),
-('Tarif réduit',  'Étudiants, moins de 18 ans',     900),
-('Tarif senior',  'Personnes de plus de 65 ans',    950);
+-----------------------------------------------------
+-- Rooms
+-----------------------------------------------------
+INSERT INTO rooms(room_id, capacity) VALUES
+(999, 90),
+(998, 60),
+(997, 40);
 
--- Séances (2 séances par film sur des salles différentes)
-INSERT INTO screenings (movie_id, room_id, date, start_time, end_time, version, ticket_sold, revenue) VALUES
-(1, 1, '2026-09-26', '2026-09-26 18:00:00+02', '2026-09-26 20:46:00+02', 'VF', 45, 54000),
-(1, 2, '2026-09-27', '2026-09-27 21:00:00+02', '2026-09-27 23:46:00+02', 'VOSTFR', 60, 72000),
-(2, 2, '2026-09-26', '2026-09-26 19:30:00+02', '2026-09-26 22:30:00+02', 'VOSTFR', 80, 96000),
-(3, 3, '2026-09-28', '2026-09-28 17:00:00+02', '2026-09-28 19:31:00+02', 'VF', 20, 24000),
-(4, 1, '2026-09-27', '2026-09-27 20:00:00+02', '2026-09-27 21:54:00+02', 'VF', 70, 84000);
 
--- Réservations (liens users <-> screenings <-> pricings)
-INSERT INTO bookings (screening_id, time_of_booking) VALUES
-(1, '2026-09-20 10:15:00+02'),
-(2, '2026-09-21 14:00:00+02'),
-(1, '2026-09-22 09:30:00+02'),
-(3, '2026-09-23 16:45:00+02'),
-(1, '2026-09-24 11:20:00+02'),
-(2, '2026-09-24 18:00:00+02');
+-----------------------------------------------------
+-- Pricings
+-----------------------------------------------------
+INSERT INTO pricings(pricing_id, name, description, price) VALUES
+(999, 'Plein tarif',     'Tarif normal',                     950),
+(998, 'Tarif étudiant',  'Sur présentation de la carte',     700),
+(997, 'Moins de 14 ans', 'Enfants de moins de 14 ans',       500),
+(996, 'Tarif ENSAI',     'Élèves et personnel de l''ENSAI',  100);
 
-INSERT INTO booking_user (booking_id, user_id, pricing_id) VALUES
-(1, 3, 1),
-(2, 3, 2),
-(3, 1, 1);
 
--- Commentaires (liens users <-> movies)
-INSERT INTO comments (user_id, movie_id, content, star, spoiler) VALUES
-(1, 1, 'Une suite grandiose, visuellement impressionnante.', 5, FALSE),
-(2, 1, 'Un peu long mais l''ambiance est incroyable.',        4, FALSE),
-(3, 2, 'Cillian Murphy est bouleversant dans ce rôle.',       5, FALSE),
-(4, 3, 'Spielberg à son meilleur, très personnel.',           4, FALSE),
-(5, 4, 'Drôle et plus profond qu''il n''y paraît.',           4, TRUE);
+-----------------------------------------------------
+-- Screenings
+-----------------------------------------------------
+INSERT INTO screenings(screening_id, movie_id, room_id, date, start_time, end_time, version, ticket_sold, revenue) VALUES
+(999, 693134, 999, '2026-09-20', '2026-09-20 18:00:00+02', '2026-09-20 20:46:00+02', 'VF',     3, 1750),
+(998, 346698, 999, '2026-09-20', '2026-09-20 22:00:00+02', '2026-09-20 23:54:00+02', 'VOSTFR', 0,    0),
+(997, 872585, 998, '2030-01-15', '2030-01-15 20:00:00+01', '2030-01-15 23:01:00+01', 'VOSTFR', 1,  100),
+(996, 157336, 997, '2030-01-16', '2030-01-16 18:00:00+01', '2030-01-16 20:49:00+01', 'VOSTFR', 0,    0),
+(995, 693134, 998, '2030-01-17', '2030-01-17 14:00:00+01', '2030-01-17 16:46:00+01', 'VF',     0,    0);
 
--- Films vus (liens users <-> movies)
-INSERT INTO movies_watched (movie_id, user_id) VALUES
-(1, 1),
-(1, 2),
-(2, 3),
-(3, 4),
-(4, 5),
-(5, 1);
+
+-----------------------------------------------------
+-- Bookings
+-----------------------------------------------------
+INSERT INTO bookings(booking_id, screening_id, time_of_booking) VALUES
+(999, 999, '2026-09-15 10:00:00+02'),
+(998, 999, '2026-09-16 14:30:00+02'),
+(997, 997, '2026-09-30 09:15:00+02');
+
+
+INSERT INTO booking_user(booking_id, user_id, pricing_id) VALUES
+(999, 998, 996),
+(999, 997, 998),
+(998, 996, 999),
+(997, 995, 996);
+
+
+-----------------------------------------------------
+-- Comments
+-----------------------------------------------------
+INSERT INTO comments(comment_id, user_id, movie_id, content, star, spoiler) VALUES
+(999, 998, 693134, 'Visuellement impressionnant, à voir au cinéma.',  5, FALSE),
+(998, 997, 693134, 'Un peu long mais l''ambiance est incroyable.',    4, FALSE),
+(997, 996, 693134, 'La fin m''a surpris, Paul change complètement.',   4, TRUE);
+
+
+-----------------------------------------------------
+-- Movies watched
+-----------------------------------------------------
+INSERT INTO movies_watched(movie_id, user_id) VALUES
+(693134, 998),
+(693134, 997),
+(693134, 996);
