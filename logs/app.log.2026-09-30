@@ -1,0 +1,13 @@
+30/09/2026 14:07:23 root                      INFO    - --------------------------------------------------
+30/09/2026 14:07:23 root                      INFO    - Starting Ensai Cinema Club                           
+30/09/2026 14:07:23 root                      INFO    - --------------------------------------------------
+30/09/2026 14:25:38 root                      INFO    - --------------------------------------------------
+30/09/2026 14:25:38 root                      INFO    - Starting Ensai Cinema Club                           
+30/09/2026 14:25:38 root                      INFO    - --------------------------------------------------
+30/09/2026 14:35:34 root                      INFO    - --------------------------------------------------
+30/09/2026 14:35:34 root                      INFO    - Starting Ensai Cinema Club                           
+30/09/2026 14:35:34 root                      INFO    - --------------------------------------------------
+30/09/2026 14:36:00 src.Control.MovieControl  INFO    - Find movies by genre
+30/09/2026 14:36:00 src.DAO.MovieRepo         INFO    -   find_by_genre('science',) - START
+30/09/2026 14:36:00 src.DAO.MovieRepo         INFO    -   find_by_genre('science',) - END
+30/09/2026 14:36:00 src.DAO.MovieRepo         INFO    -     └─> Output: ['movie_id=693134 original_title=\'Dune: Part Two\' length=166 genre=\'Science-fiction\' plot="Paul Atreides s\'unit aux Fremen pour se venger."', 'movie_id=157336 original_title=\'Interstellar\' length=169 genre=\'Science-fiction\' plot="Un groupe d\'explorateurs voyage à travers un trou de ver."'] ... (2 elements)
