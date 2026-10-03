@@ -137,4 +137,4 @@ dmypy.json
 **/*.quarto_ipynb
 
 # Application logs
-   logs/
+logs/

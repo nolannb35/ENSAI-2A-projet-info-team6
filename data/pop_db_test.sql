@@ -50,7 +50,7 @@ INSERT INTO bookings (screening_id, time_of_booking) VALUES
 INSERT INTO booking_user (booking_id, user_id, pricing_id) VALUES
 (1, 3, 1),
 (2, 3, 2),
-(3, 1, 1)
+(3, 1, 1);
 
 -- Commentaires (liens users <-> movies)
 INSERT INTO comments (user_id, movie_id, content, star, spoiler) VALUES

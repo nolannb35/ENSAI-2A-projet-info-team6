@@ -73,7 +73,7 @@ CREATE TABLE booking_user (
     booking_id       INTEGER REFERENCES bookings(booking_id),
     pricing_id       INTEGER REFERENCES pricings(pricing_id),
     user_id          INTEGER REFERENCES users(user_id)
-)
+);
 
 CREATE TABLE comments (
     comment_id  SERIAL PRIMARY KEY,
