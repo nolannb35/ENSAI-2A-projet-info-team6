@@ -14,3 +14,9 @@ class Screening(BaseModel):
     version: Optional[str] = None
     ticket_sold: int = 0
     revenue: int = 0
+
+class ScreeningCreate(BaseModel):
+    movie_id: int
+    room_id: int
+    start_time: datetime.datetime
+    version: str

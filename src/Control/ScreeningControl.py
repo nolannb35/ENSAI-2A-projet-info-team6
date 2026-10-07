@@ -1,6 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException
+from datetime import timedelta
 
-from src.Model.Screening import Screening
+from fastapi import APIRouter, Depends, HTTPException, status
+
+from src.Model.Screening import Screening, ScreeningCreate
+from src.Service.MovieService import MovieService
+from src.Service.RoomService import RoomService
 from src.Service.ScreeningService import ScreeningService
 from src.utils.log_utils import get_logger
 
@@ -13,6 +17,13 @@ def get_screening_service():
     """Dependency Injection provider for ScreeningService."""
     return ScreeningService()
 
+def get_room_service():
+    """Dependency Injection provider for RoomService."""
+    return RoomService()
+
+def get_movie_service():
+    """Dependency Injection provider for MovieService."""
+    return MovieService()
 
 @screening_router.get("/upcoming", response_model=list[Screening])
 async def find_upcoming_screening(screening_service=Depends(get_screening_service)):
@@ -66,3 +77,32 @@ async def screening_by_id(screening_id: int, screening_service=Depends(get_scree
     if not screening:
         raise HTTPException(status_code=404, detail=f"Screening (id={screening_id}) not found.")
     return screening
+
+
+@screening_router.post("/", response_model=Screening, status_code=status.HTTP_201_CREATED)
+async def create_screening(
+    screening_data: ScreeningCreate,
+    screening_service=Depends(get_screening_service),
+    movie_service=Depends(get_movie_service),
+    room_service=Depends(get_room_service),
+):
+    logger.info("Create a screening")
+    movie = movie_service.get_by_id(screening_data.movie_id)
+    if not movie:
+        raise HTTPException(status_code=404, detail=f"Movie (id={screening_data.movie_id}) not found.")
+
+    room = room_service.get_by_id(screening_data.room_id)
+    if not room:
+        raise HTTPException(status_code=404, detail=f"Room (id={screening_data.room_id}) not found.")
+
+    end_time = screening_data.start_time + timedelta(minutes=movie.length)
+    if not screening_service.is_room_available(screening_data.room_id, screening_data.start_time, end_time):
+        raise HTTPException(status_code=409, detail=f"Room (id={screening_data.room_id}) already used.")
+
+    new_screening = screening_service.create(
+        screening_data.movie_id, screening_data.room_id, screening_data.start_time, screening_data.version
+    )
+    if not new_screening:
+        raise HTTPException(status_code=500, detail="Error while creating screening.")
+
+    return new_screening
