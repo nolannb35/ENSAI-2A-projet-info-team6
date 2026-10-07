@@ -24,20 +24,15 @@ async def find_upcoming_screening(screening_service=Depends(get_screening_servic
     return screening_list
 
 
-@screening_router.get("/{tmdb_id}", response_model=Screening)
-async def screening_by_movie_id(tmdb_id: int, screening_service=Depends(get_screening_service)):
-    """Find a screening by its TMDB id.
+@screening_router.get("/movie_id/{movie_id}", response_model=list[Screening])
+async def screening_by_movie_id(movie_id: int, screening_service=Depends(get_screening_service)):
+    """Find a list of screenings by its TMDB id.
     Args:
-        tmdb_id (int)
+        movie_id (int)
         screening_service (ScreeningService): The service used to interact with screening data
     Returns:
-        Screening: The screening data if found
-    Raises:
-        HTTPException: 404 error if the screening is not found
+        list[Screening]: The screening data if found
     """
     logger.info("Find a screening by movie_id")
-    screening = screening_service.get_by_movie_id(tmdb_id)
-    if not screening:
-        raise HTTPException(status_code=404, detail=f"Screening (movie_id={tmdb_id}) not found.")
+    screening = screening_service.get_by_movie_id(movie_id)
     return screening
-

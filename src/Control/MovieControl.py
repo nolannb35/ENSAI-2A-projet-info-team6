@@ -25,11 +25,11 @@ async def find_all_movies(movie_service=Depends(get_movie_service)):
     return movies_list
 
 
-@movie_router.get("/{tmdb_id}", response_model=Movie)
-async def movie_by_id(tmdb_id: int, movie_service=Depends(get_movie_service)):
+@movie_router.get("/movie/{movie_id}", response_model=Movie)
+async def movie_by_id(movie_id: int, movie_service=Depends(get_movie_service)):
     """Find a movie by its TMDB id.
     Args:
-        tmdb_id (int)
+        movie_id (int)
         movie_service (MovieService): The service used to interact with movie data
     Returns:
         Movie: The movie data if found
@@ -37,9 +37,9 @@ async def movie_by_id(tmdb_id: int, movie_service=Depends(get_movie_service)):
         HTTPException: 404 error if the movie is not found
     """
     logger.info("Find a movie by id")
-    movie = movie_service.get_by_id(tmdb_id)
+    movie = movie_service.get_by_id(movie_id)
     if not movie:
-        raise HTTPException(status_code=404, detail=f"Movie (id={tmdb_id}) not found.")
+        raise HTTPException(status_code=404, detail=f"Movie (id={movie_id}) not found.")
     return movie
 
 
