@@ -58,9 +58,7 @@ class ScreeningService:
         Returns:
             True if the room is free, False otherwise
         """
-        conflicts = ScreeningRepo().find_by_room_and_period(
-            room_id, start_time - MARGIN, end_time + MARGIN
-        )
+        conflicts = ScreeningRepo().find_by_room_and_period(room_id, start_time - MARGIN, end_time + MARGIN)
         return len(conflicts) == 0
 
     @log

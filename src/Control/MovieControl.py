@@ -25,7 +25,7 @@ async def find_all_movies(movie_service=Depends(get_movie_service)):
     return movies_list
 
 
-@movie_router.get("/movie/{movie_id}", response_model=Movie)
+@movie_router.get("/{movie_id}", response_model=Movie)
 async def movie_by_id(movie_id: int, movie_service=Depends(get_movie_service)):
     """Find a movie by its TMDB id.
     Args:

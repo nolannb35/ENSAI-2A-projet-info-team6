@@ -316,8 +316,7 @@ class ScreeningRepo(metaclass=Singleton):
             with DBConnector().connection as connection:
                 with connection.cursor() as cursor:
                     cursor.execute(
-                        "DELETE FROM screenings                      "
-                        " WHERE screening_id = %(screening_id)s;     ",
+                        "DELETE FROM screenings                       WHERE screening_id = %(screening_id)s;     ",
                         {"screening_id": screening.screening_id},
                     )
                     res = cursor.rowcount
