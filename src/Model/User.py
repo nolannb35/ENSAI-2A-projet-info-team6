@@ -2,9 +2,9 @@ from pydantic import BaseModel
 
 
 class User(BaseModel):
-    id: int
+    user_id: int
     username: str
-    password: str
+    hashed_password: str
     email: str
-    salt: str
+    salt: bytes
     admin: bool
