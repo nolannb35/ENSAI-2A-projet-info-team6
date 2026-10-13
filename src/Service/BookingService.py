@@ -33,14 +33,44 @@ class BookingService:
     def get_by_day(self, day: date) -> list[Booking]:
         return self.booking_repo.get_by_day(day)
 
-    def delete(self, booking: Booking) -> bool:
-        # Il faudrait s'assurer du fait que l'utilisateur est admin
-        return self.booking_repo.delete(booking)
+    def delete(self, booking: Booking, user: User) -> bool:
+        delete_right = False
+        if user.admin:
+            delete_right = True
+        for users in booking.user_pricing:
+            if users["user"] == user:
+                delete_right = True
 
-    def update(self, booking: Booking) -> bool:
-        # Pareil admin
-        return self.booking_repo.update(booking)
+        if delete_right is True:
+            return self.booking_repo.delete(booking)
+        else:
+            # Raise error
+            return False
 
-    def create(self, booking: Booking) -> bool:
-        # A conditionner au paiement ou admin
-        return self.booking_repo.create(booking)
+
+    def update(self, booking: Booking, user: User = None) -> bool:
+        update_right = False
+        if user.admin:
+            update_right = True
+        for users in booking.user_pricing:
+            if users["user"] == user:
+                update_right = True
+
+        if update_right is True:
+            return self.booking_repo.update(booking)
+        else:
+            # Raise error
+            return False
+
+    def create(self, booking: Booking, user: User) -> bool:
+        # A conditionner au paiement ou admin*
+        create_right = False
+        if user.admin:
+            create_right = True
+
+        # ALSO CHECK IF USER HAS PAID
+
+        if create_right is True:
+            return self.booking_repo.create(booking)
+        else:
+            return False

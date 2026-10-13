@@ -1,7 +1,7 @@
 from typing import Optional
 
-from src.DAO.UserRepo import UserRepo
 from src.DAO.DBConnector import DBConnector
+from src.DAO.UserRepo import UserRepo
 from src.Model.User import User
 from src.Service.PasswordService import create_salt, hash_password
 
