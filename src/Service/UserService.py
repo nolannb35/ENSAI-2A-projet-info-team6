@@ -1,9 +1,11 @@
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 
 from src.DAO.DBConnector import DBConnector
 from src.DAO.UserRepo import UserRepo
-from src.Model.User import User
 from src.Service.PasswordService import create_salt, hash_password
+
+if TYPE_CHECKING:
+    from src.Model.User import User
 
 
 class UserService:

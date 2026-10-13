@@ -57,7 +57,7 @@ class BookingRepo(metaclass=Singleton):
     # Ici se trouvent les méthodes combinées permettant de garder la cohésion:
 
     @log
-    def get_by_id(self, booking_id: int) -> Booking:
+    def get_by_id(self, booking_id: int) -> Booking | None:
         """Find a booking by their id.
         Args:
             booking_id (int): The ID of the booking to find

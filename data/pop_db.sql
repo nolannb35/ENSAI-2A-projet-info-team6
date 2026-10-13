@@ -4,12 +4,12 @@
 
 
 -- Users
-INSERT INTO users(username, email, password, administrator) VALUES
-('admin',   'admin@ensai-cinema.fr',  'admin',      TRUE),
-('nolann',  'nolann@mail.fr',         'nolann123',  FALSE),
-('simon',   'simon@mail.fr',          'simon123',   FALSE),
-('zoeb',    'zoeb@mail.fr',           'zoeb123',    FALSE),
-('samuel',  'samuel@mail.fr',         'samuel123',  FALSE);
+INSERT INTO users(user_id, username, email, hashed_password, salt, administrator) VALUES
+('admin',   'admin@ensai-cinema.fr',  'admin',   'gougougaga',   TRUE),
+('nolann',  'nolann@mail.fr',         'nolann123', 'gougougaga', FALSE),
+('simon',   'simon@mail.fr',          'simon123', 'gougougaga',  FALSE),
+('zoeb',    'zoeb@mail.fr',           'zoeb123', 'gougougaga',   FALSE),
+('samuel',  'samuel@mail.fr',         'samuel123', 'gougougaga', FALSE);
 
 
 
