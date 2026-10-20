@@ -17,13 +17,16 @@ def get_screening_service():
     """Dependency Injection provider for ScreeningService."""
     return ScreeningService()
 
+
 def get_room_service():
     """Dependency Injection provider for RoomService."""
     return RoomService()
 
+
 def get_movie_service():
     """Dependency Injection provider for MovieService."""
     return MovieService()
+
 
 @screening_router.get("/upcoming", response_model=list[Screening])
 async def find_upcoming_screening(screening_service=Depends(get_screening_service)):

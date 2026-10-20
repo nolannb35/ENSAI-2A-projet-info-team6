@@ -15,6 +15,7 @@ class Screening(BaseModel):
     ticket_sold: int = 0
     revenue: int = 0
 
+
 class ScreeningCreate(BaseModel):
     movie_id: int
     room_id: int

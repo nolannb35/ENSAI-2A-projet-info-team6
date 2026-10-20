@@ -143,8 +143,7 @@ class UserRepo(metaclass=Singleton):
             with DBConnector().connection as connection:
                 with connection.cursor() as cursor:
                     cursor.execute(
-                        "INSERT INTO movies_watched(user_id, movie_id) VALUES "
-                        "(%(user_id)s, %(movie_id)s) ",
+                        "INSERT INTO movies_watched(user_id, movie_id) VALUES (%(user_id)s, %(movie_id)s) ",
                         {
                             "user_id": user.user_id,
                             "movie_id": movie.movie_id,
@@ -222,11 +221,11 @@ class UserRepo(metaclass=Singleton):
                 movie_of_comment = MovieRepo().find_by_id(comment["movie_id"])
 
                 comment_object = Comment(
-                comment_id =comment["comment_id"],
-                user = user,
-                movie = movie_of_comment,
-                content = comment["content"],
-                star = comment["star"],
+                    comment_id=comment["comment_id"],
+                    user=user,
+                    movie=movie_of_comment,
+                    content=comment["content"],
+                    star=comment["star"],
                 )
                 list_comment.append(comment_object)
 
@@ -298,7 +297,7 @@ class UserRepo(metaclass=Singleton):
                             "email": user.email,
                             "hashed_password": user.hashed_password,
                             "salt": user.salt,
-                            "admin": user.admin
+                            "admin": user.admin,
                         },
                     )
                     if cursor.rowcount != 1:

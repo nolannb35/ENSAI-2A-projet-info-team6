@@ -18,14 +18,17 @@ def hash_password(password: str, salt: str) -> str:
     Returns:
     str: the hashed password
     """
-    return hashlib.scrypt(password.encode("utf-8"), salt= salt, n=2**14, r=8, p=1).hex()
+    return hashlib.scrypt(password.encode("utf-8"), salt=salt, n=2**14, r=8, p=1).hex()
+
 
 def create_salt() -> str:
     return secrets.token_hex(128)
 
+
 def check_password_strength(password: str):
     if len(password) < 8:
         raise Exception("Password length must be at least 8 characters")
+
 
 def validate_email_password(email: str, password: str) -> User:
     """Returns an User if the email and password correspond.
@@ -46,6 +49,7 @@ def validate_email_password(email: str, password: str) -> User:
         raise ValueError("Invalid username or password")
 
     return user_by_email
+
 
 def verify_password(password: str, user: User) -> bool:
     """Verifies if a password is the password of said user.

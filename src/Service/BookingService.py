@@ -47,7 +47,6 @@ class BookingService:
             # Raise error
             return False
 
-
     def update(self, booking: Booking, user: User = None) -> bool:
         update_right = False
         if user.admin:
