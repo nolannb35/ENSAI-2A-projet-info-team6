@@ -21,7 +21,7 @@ CREATE TABLE users (
     email          TEXT NOT NULL UNIQUE,
     hashed_password       TEXT NOT NULL,
     salt            TEXT NOT NULL,
-    administrator  BOOLEAN DEFAULT FALSE
+    admin  BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE movies (
@@ -67,7 +67,7 @@ CREATE TABLE screenings (
 CREATE TABLE bookings (
     booking_id       SERIAL PRIMARY KEY,
     screening_id     INTEGER REFERENCES screenings(screening_id),
-    time_of_booking  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+    date_booking  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE booking_user (

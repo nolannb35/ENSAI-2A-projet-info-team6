@@ -1,7 +1,7 @@
 -----------------------------------------------------
 -- Users
 -----------------------------------------------------
-INSERT INTO users(user_id, username, email, hashed_password, salt, administrator) VALUES
+INSERT INTO users(user_id, username, email, hashed_password, salt, admin) VALUES
 (999, 'admin',   'admin@ensai-cinema.fr',  'admin',   'gougougaga',   TRUE),
 (998, 'nolann',  'nolann@mail.fr',         'nolann123', 'gougougaga', FALSE),
 (997, 'simon',   'simon@mail.fr',          'simon123', 'gougougaga',  FALSE),
@@ -13,7 +13,7 @@ INSERT INTO users(user_id, username, email, hashed_password, salt, administrator
 -- Movies
 -----------------------------------------------------
 INSERT INTO movies(movie_id, title, runtime, genre, plot) VALUES
-(693134, 'Dune: Part Two',        166, 'Science-Fiction, Aventure',         'Paul Atreides s'allie aux Fremen pour venger sa famille et empêcher un avenir terrible.'),
+(693134, 'Dune: Part Two',        166, 'Science-Fiction, Aventure',         'Paul Atreides s''allie aux Fremen pour venger sa famille et empêcher un avenir terrible.'),
 (872585, 'Oppenheimer',           181, 'Drame, Histoire',                   'Le portrait du physicien J. Robert Oppenheimer et de la création de la bombe atomique.'),
 (157336, 'Interstellar',          169, 'Aventure, Drame, Science-Fiction',  'Des explorateurs traversent un trou de ver pour trouver une nouvelle planète habitable.'),
 (346698, 'Barbie',                114, 'Comédie, Aventure',                 'Barbie quitte Barbieland et découvre le monde réel.'),
@@ -53,7 +53,7 @@ INSERT INTO screenings(screening_id, movie_id, room_id, date, start_time, end_ti
 -----------------------------------------------------
 -- Bookings
 -----------------------------------------------------
-INSERT INTO bookings(booking_id, screening_id, time_of_booking) VALUES
+INSERT INTO bookings(booking_id, screening_id, date_booking) VALUES
 (999, 999, '2026-09-15 10:00:00+02'),
 (998, 999, '2026-09-16 14:30:00+02'),
 (997, 997, '2026-09-30 09:15:00+02');

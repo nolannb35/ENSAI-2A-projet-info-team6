@@ -4,7 +4,7 @@
 
 
 -- Users
-INSERT INTO users(user_id, username, email, hashed_password, salt, administrator) VALUES
+INSERT INTO users(username, email, hashed_password, salt, admin) VALUES
 ('admin',   'admin@ensai-cinema.fr',  'admin',   'gougougaga',   TRUE),
 ('nolann',  'nolann@mail.fr',         'nolann123', 'gougougaga', FALSE),
 ('simon',   'simon@mail.fr',          'simon123', 'gougougaga',  FALSE),
