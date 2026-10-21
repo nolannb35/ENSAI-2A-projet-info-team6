@@ -18,8 +18,31 @@ class BookingService:
         self.booking_repo = BookingRepo()
         self.payment_service = StripeService()
 
+    def get_revenue(self, booking: Booking) -> int:
+        """Returns the entire cost of a booking.
+        Args:
+            booking (Booking): Booking to analyse.
+        Returns:
+            int: Price of the entire booking."""
+        revenue = 0
+
+        for person in booking.user_pricing:
+            revenue = revenue + person["pricing"].price
+
+        return revenue
+
     def get_by_id(self, booking_id: int) -> Booking:
         return self.booking_repo.get_by_id(booking_id)
+
+    def get_by_period(self, start_day: date, end_day: date) -> list[Booking]:
+        """Get all bookings made over a period.
+        Args:
+            start_day (date): Start date of period.
+            end_day (date): End date of period (included).
+        Returns:
+            list[Booking]: list of bookings made on that period."""
+
+        return BookingRepo().get_by_period(start_day, end_day)
 
     def find_all(self) -> list[Booking]:
         return self.booking_repo.find_all()

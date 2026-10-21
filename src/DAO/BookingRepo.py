@@ -203,6 +203,23 @@ class BookingRepo(metaclass=Singleton):
         return bookings_list
 
     @log
+    def get_by_period(self, start_day: date, end_day: date) -> list[Booking]:
+        """Get all bookings made over a period.
+        Args:
+            start_day (date): Start date of period.
+            end_day (date): End date of period (included).
+        Returns:
+            list[Booking]: list of bookings made on that period."""
+        bookings: list[Booking] = []
+
+        current_day = start_day
+        while current_day <= end_day:
+            bookings.extend(self.get_by_day(current_day))
+            current_day += timedelta(days=1)
+
+        return bookings
+
+    @log
     def get_by_day(self, day: date) -> list[Booking]:
         """Get all bookings made on a given day.
         Args:

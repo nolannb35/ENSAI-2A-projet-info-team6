@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from src.DAO.MovieRepo import MovieRepo
 from src.DAO.ScreeningRepo import ScreeningRepo
 from src.Model.Screening import Screening
+from src.Service.BookingService import BookingService
 from src.utils.log_utils import log
 
 MARGIN = timedelta(hours=1)
@@ -10,6 +11,31 @@ MARGIN = timedelta(hours=1)
 
 class ScreeningService:
     """Business logic about screenings. Accesses the database through ScreeningRepo."""
+
+    def get_by_start_hour(self, start_hour: int) -> list[Screening]:
+        """Get screenings by their start hour.
+        Args:
+            start_hour (int): The hour of the start of the screening (0 to 23).
+        Returns:
+            list[Screening]: list of corresponding screenings
+        """
+        return ScreeningRepo().get_by_start_hour(start_hour)
+
+    def get_screening_revenue(self, screening: Screening) -> int:
+        """Returns the revenue for a screening and updates its revenue attribute.
+        Args:
+            screening (Screening): Screening needed.
+        Returns:
+            int: revenue of screening in cents."""
+        bookings = BookingService().get_by_screening(screening)
+
+        revenue = 0
+        for booking in bookings:
+            for person in booking.user_pricing:
+                revenue = revenue + person["pricing"].price
+
+        screening.revenue = revenue
+        return revenue
 
     @log
     def get_by_id(self, screening_id: int) -> Screening | None:

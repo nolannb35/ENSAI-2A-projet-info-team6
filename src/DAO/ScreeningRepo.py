@@ -12,6 +12,45 @@ class ScreeningRepo(metaclass=Singleton):
     """Class containing methods to access Screenings in the database."""
 
     @log
+    def get_by_start_hour(self, start_hour: int) -> list[Screening]:
+        """Get screenings by their start hour.
+        Args:
+            start_hour (int): The hour of the start of the screening (0 to 23).
+        Returns:
+            list[Screening]: list of corresponding screenings
+        """
+        try:
+            with DBConnector().connection as connection:
+                with connection.cursor() as cursor:
+                    cursor.execute(
+                        "SELECT *                                              "
+                        "  FROM screenings                                     "
+                        " WHERE EXTRACT(HOUR FROM start_time) = %(start_hour)s;",
+                        {"start_hour": start_hour},
+                    )
+                    res = cursor.fetchall()
+        except Exception as e:
+            logger.error(e)
+            raise
+
+        screenings = []
+        for row in res:
+            screening = Screening(
+                screening_id=row["screening_id"],
+                movie_id=row["movie_id"],
+                room_id=row["room_id"],
+                date=row["date"],
+                start_time=row["start_time"],
+                end_time=row["end_time"],
+                version=row["version"],
+                ticket_sold=row["ticket_sold"],
+                revenue=row["revenue"],
+            )
+            screenings.append(screening)
+
+        return screenings
+
+    @log
     def create(self, screening: Screening) -> bool:
         """Create a screening in the database.
         Args:
@@ -54,7 +93,7 @@ class ScreeningRepo(metaclass=Singleton):
         return created
 
     @log
-    def find_by_id(self, screening_id: int) -> Screening | None:
+    def get_by_id(self, screening_id: int) -> Screening | None:
         """Find a screening by its id.
         Args:
             screening_id (int): The ID of the screening to find
@@ -92,7 +131,7 @@ class ScreeningRepo(metaclass=Singleton):
         return screening
 
     @log
-    def find_by_movie_id(self, movie_id: int) -> list[Screening]:
+    def get_by_movie_id(self, movie_id: int) -> list[Screening]:
         """List the screenings of a movie.
         Args:
             movie_id (int): The TMDB id of the movie
@@ -135,7 +174,7 @@ class ScreeningRepo(metaclass=Singleton):
         return screenings_list
 
     @log
-    def find_upcoming(self) -> list[Screening]:
+    def get_upcoming(self) -> list[Screening]:
         """List the screenings that have not started yet.
         Returns:
             list[Screening] sorted by start_time
@@ -175,7 +214,7 @@ class ScreeningRepo(metaclass=Singleton):
         return screenings_list
 
     @log
-    def find_by_room_and_period(self, room_id: int, start: datetime, end: datetime) -> list[Screening]:
+    def get_by_room_and_period(self, room_id: int, start: datetime, end: datetime) -> list[Screening]:
         """List the screenings of a room that overlap a given period.
         Used to check that a room is free before scheduling a new screening.
         Args:
@@ -223,7 +262,7 @@ class ScreeningRepo(metaclass=Singleton):
         return screenings_list
 
     @log
-    def find_all(self) -> list[Screening]:
+    def get_all(self) -> list[Screening]:
         """List all screenings in the database.
         Returns:
             list[Screening] sorted by start_time
