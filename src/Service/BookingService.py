@@ -95,6 +95,7 @@ class BookingService:
 
         if create_right is True:
             booking.screening.revenue = +BookingService().get_revenue(booking)
+            booking.screening.ticket_sold = +len(booking.user_pricing)
             ScreeningService().update(booking.screening)
             return self.booking_repo.create(booking)
         else:
