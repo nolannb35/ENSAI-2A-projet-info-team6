@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 
 from src.DAO.BookingRepo import BookingRepo
+from src.Service.ScreeningService import ScreeningService
 from src.Service.StripeService import StripeService
 
 if TYPE_CHECKING:
@@ -93,6 +94,8 @@ class BookingService:
         # ALSO CHECK IF USER HAS PAID
 
         if create_right is True:
+            booking.screening.revenue = +BookingService().get_revenue(booking)
+            ScreeningService().update(booking.screening)
             return self.booking_repo.create(booking)
         else:
             return False

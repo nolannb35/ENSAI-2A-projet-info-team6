@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 
 from src.Service.BookingService import BookingService
+from src.Service.MovieService import MovieService
 from src.Service.ScreeningService import ScreeningService
 
 if TYPE_CHECKING:
@@ -72,10 +73,30 @@ class AccountingService:
 
         return revenues
 
-    def get_highest_grossing_movies(self, top: int) -> list[Movie]:
-        """Returns the sorted list of the top top highest grossing movies.
+    def get_revenue_by_movie(self, movie: Movie) -> int:
+        """Returns the revenue made from screenings of a movie.
         Args:
-            top (int): Amount of movies to return.
+            movie (Movie): Movie we want the revenue of.
         Returns:
-            list[Movie]: list of highest grossing movies."""
-        pass
+            int: Revenue of movie."""
+
+        screenings = ScreeningService().get_by_movie_id(movie_id=movie.movie_id)
+        revenue = 0
+
+        for screening in screenings:
+            revenue_of_screening = ScreeningService().get_screening_revenue(screening)
+            revenue = revenue + revenue_of_screening
+
+        return revenue
+
+    def get_highest_grossing_movies(self) -> list[Movie]:
+        """Returns the ordered list of movies, highest grossing being first.
+        Returns:
+            list[Movie]: The ordered list of movies.
+        """
+        movies = MovieService().find_all()
+
+        # Sort by a calculation done on each object
+        sorted_movies = sorted(movies, key=lambda movie: AccountingService().get_revenue_by_movie(movie))
+
+        return sorted_movies

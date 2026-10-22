@@ -128,3 +128,13 @@ class ScreeningService:
             True if deletion was successful, False otherwise
         """
         return ScreeningRepo().delete(screening)
+
+    @log
+    def update(self, screening: Screening) -> bool:
+        """Updates a screening with the same screening id.
+        Args:
+            screening (Screening): Screening to update.
+        Returns:
+            bool: True if update sucessfull.
+        """
+        return ScreeningRepo().update(screening)

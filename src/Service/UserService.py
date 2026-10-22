@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, Optional
 
 from src.DAO.UserRepo import UserRepo
+from src.Service.BookingService import BookingService
 from src.Service.PasswordService import create_salt, hash_password
 
 if TYPE_CHECKING:
@@ -76,6 +77,24 @@ class UserService:
             list[Movie]: List of movies seen by the user
         """
         return UserRepo().get_movies_watched(user)
+
+    def get_user_spending(self, user: User) -> int:
+        """Returns the spending associated with an user.
+        Args:
+            user (User): User of whom we want the spending.
+        Returns:
+            int: spending associated with the user.
+        """
+
+        user_spending = 0
+        bookings = BookingService().get_by_user(user)
+
+        for booking in bookings:
+            for person in booking.user_pricing:
+                if person["user"].user_id == user.user_id:
+                    user_spending = user_spending + person["pricing"].price
+
+        return user_spending
 
     def update(self, user: User) -> bool:
         """Replaces the user from the database with the same id with this one
