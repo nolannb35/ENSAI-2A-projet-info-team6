@@ -3,14 +3,14 @@ from typing import TYPE_CHECKING
 from src.DAO.BookingRepo import BookingRepo
 from src.DAO.DBConnector import DBConnector
 from src.DAO.MovieRepo import MovieRepo
+from src.Model.Comment import Comment
+from src.Model.User import User
 from src.utils.log_utils import get_logger, log
 from src.utils.singleton import Singleton
 
 if TYPE_CHECKING:
     from src.Model.Booking import Booking
-    from src.Model.Comment import Comment
     from src.Model.Movie import Movie
-    from src.Model.User import User
 
 
 logger = get_logger(__name__)
